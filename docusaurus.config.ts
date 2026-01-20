@@ -81,7 +81,8 @@ const config: Config = {
           position: 'left',
           label: 'Docs',
         },
-        { to: '/blog', label: 'Blog', position: 'left' },
+
+
         {
           href: 'https://github.com/chien-yu/public-blog',
           label: 'GitHub',
@@ -113,10 +114,7 @@ const config: Config = {
         {
           title: 'More',
           items: [
-            {
-              label: 'Blog',
-              to: '/blog',
-            },
+
           ],
         },
       ],
