@@ -5,8 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'Chien-Yu Blog',
-  tagline: 'Plaintext Accounting & Tech',
+  title: 'Yu Blog',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -69,11 +68,7 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Chien-Yu Blog',
-      logo: {
-        alt: 'Site Logo',
-        src: 'img/logo.svg',
-      },
+      title: 'Yu Blog',
       items: [
         {
           type: 'docSidebar',
@@ -81,44 +76,13 @@ const config: Config = {
           position: 'left',
           label: 'Docs',
         },
-
-
-        {
-          href: 'https://github.com/chien-yu/public-blog',
-          label: 'GitHub',
-          position: 'right',
-        },
       ],
     },
     footer: {
       style: 'dark',
       links: [
-        {
-          title: 'Docs',
-          items: [
-            {
-              label: 'Plaintext Accounting',
-              to: '/docs/plaintextaccounting',
-            },
-          ],
-        },
-        {
-          title: 'Community',
-          items: [
-            {
-              label: 'GitHub',
-              href: 'https://github.com/chien-yu',
-            },
-          ],
-        },
-        {
-          title: 'More',
-          items: [
-
-          ],
-        },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Chien-Yu. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Yu`,
     },
     prism: {
       theme: prismThemes.github,
