@@ -76,6 +76,7 @@ const config: Config = {
           position: 'left',
           label: 'Docs',
         },
+        { to: '/blog', label: '貼文', position: 'left' },
       ],
     },
     footer: {
