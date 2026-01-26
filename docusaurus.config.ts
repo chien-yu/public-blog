@@ -46,6 +46,8 @@ const config: Config = {
         },
         blog: {
           showReadingTime: false,
+          blogTitle: 'Yu 的隨筆',
+          blogDescription: '紀錄生活與各種想法。',
           feedOptions: {
             type: ['rss', 'atom'],
             xslt: true,
