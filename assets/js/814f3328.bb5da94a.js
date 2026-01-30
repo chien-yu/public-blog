@@ -1,1 +1,0 @@
-"use strict";(globalThis.webpackChunkpublic_blog=globalThis.webpackChunkpublic_blog||[]).push([[472],{5513(e){e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Chandelier","permalink":"/blog/2026/01/chandelier","unlisted":false,"date":"2026-01-26T04:55:14.000Z"}]}')}}]);
