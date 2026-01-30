@@ -25,7 +25,7 @@ function HomepageHeader() {
           </Link>
         </div>
         <div style={{ marginTop: '20px' }}>
-          <p>Contact: chan.chienyuc@gmail.com</p>
+          <p>Contact: hello@chienyuc.blog</p>
         </div>
       </div>
     </header>
