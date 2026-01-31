@@ -76,7 +76,7 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Docs',
+          label: '筆記',
         },
         { to: '/blog', label: '貼文', position: 'left' },
       ],
