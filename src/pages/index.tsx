@@ -20,7 +20,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/category/accounting">
+            to="/docs/accounting/pta-intro">
             Read My First Article 📄
           </Link>
         </div>
@@ -37,7 +37,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      description="Yu 的個人部落格，紀錄生活與各種想法。">
       <HomepageHeader />
       <main>
       </main>
