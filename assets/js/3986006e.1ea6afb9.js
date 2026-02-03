@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkpublic_blog=globalThis.webpackChunkpublic_blog||[]).push([[894],{8961(i){i.exports=JSON.parse('{"categoryGeneratedIndex":{"title":"\ud83d\udcca \u6703\u8a08","slug":"accounting","permalink":"/docs/accounting","sidebar":"tutorialSidebar","navigation":{"next":{"title":"\u8a18\u5e33","permalink":"/docs/accounting/accounting-intro"}}}}')}}]);
