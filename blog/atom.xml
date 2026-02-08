@@ -2,11 +2,20 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://chienyuc.blog/blog</id>
     <title>Yu Blog Blog</title>
-    <updated>2026-01-29T00:00:00.000Z</updated>
+    <updated>2026-02-07T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://chienyuc.blog/blog"/>
     <subtitle>Yu Blog Blog</subtitle>
     <icon>https://chienyuc.blog/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[肋眼]]></title>
+        <id>https://chienyuc.blog/blog/ribeye-steak</id>
+        <link href="https://chienyuc.blog/blog/ribeye-steak"/>
+        <updated>2026-02-07T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[今天挑牛排時遇到熱心的廚師來補貨，跟我說他那裏有更好的肉，我笑說我其實看不出來哪一塊比較好，他就分享了挑選肋眼的秘訣：優先選擇上蓋肉較多的，因為那是最嫩的部分。就是圖片裡上層延伸到左邊，被脂肪分開的部分。原來平常看到用繩子綁起來的牛排，就是把上蓋肉撥下來後，捲起來單獨賣的。]]></summary>
+        <content type="html"><![CDATA[<p>今天挑牛排時遇到熱心的廚師來補貨，跟我說他那裏有更好的肉，我笑說我其實看不出來哪一塊比較好，他就分享了挑選肋眼的秘訣：優先選擇上蓋肉較多的，因為那是最嫩的部分。就是圖片裡上層延伸到左邊，被脂肪分開的部分。原來平常看到用繩子綁起來的牛排，就是把上蓋肉撥下來後，<a href="https://www.youtube.com/shorts/iJR3EvdogwU" target="_blank" rel="noopener noreferrer" class="">捲起來</a>單獨賣的。</p>
+<p><img decoding="async" loading="lazy" alt="Image" src="https://chienyuc.blog/assets/images/ribeye-qfc-8cddb92be451c65288d0b98d97dc5f21.jpg" width="1344" height="1008" class="img_ev3q"></p>]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[聊天紀錄考古]]></title>
         <id>https://chienyuc.blog/blog/chat-archaeology</id>
