@@ -4,10 +4,22 @@
         <title>Yu Blog Blog</title>
         <link>https://chienyuc.blog/blog</link>
         <description>Yu Blog Blog</description>
-        <lastBuildDate>Sat, 07 Feb 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 19 Feb 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Moze 記帳工具觀察]]></title>
+            <link>https://chienyuc.blog/blog/moze-observation</link>
+            <guid>https://chienyuc.blog/blog/moze-observation</guid>
+            <pubDate>Thu, 19 Feb 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[從 PipperL 的這篇文章 認識了 Moze。看到同樣熱衷於紀錄的人，很好奇他們的作業模式，以及為什麼工具選擇上會不同。]]></description>
+            <content:encoded><![CDATA[<p>從 PipperL 的<a href="https://blog.serv.idv.tw/2020/05/pm2moze/" target="_blank" rel="noopener noreferrer" class="">這篇文章</a> 認識了 <a href="https://doc.moze.app/" target="_blank" rel="noopener noreferrer" class="">Moze</a>。看到同樣熱衷於紀錄的人，很好奇他們的作業模式，以及為什麼工具選擇上會不同。</p>
+<p>Moze 這個介面跟其他手機 App 的複雜度差不多，一般使用者的第一步，新增帳戶頁面就有 12 個設定。</p>
+<img src="https://chienyuc.blog/assets/images/new-account-30bf69a33d9764720e41edef86f024c6.jpg" alt="新增帳戶頁面" style="width:50%">
+<p>許多在手機或平板上的記帳工具，可以方便使用者「隨手記錄」，但我覺得這是不必要的步驟。「隨時紀錄」增加的是時間軸上的帳目準確度，但這個意義大嗎？對我而言，要養成買飯、網購都要馬上紀錄的習慣太難。</p>
+<p>我因為消費都是透過信用卡，每個月的帳單就已彙整了完整紀錄。所以我可以每個月只記錄一次，當然在記錄之前，這個月的帳目就不是準確地。但紀錄的過程只要透過大型語言模型就可以自動分類。之所以任意的語言模型可以接到記帳工具中，關鍵在於我的帳本格式就是<a class="" href="https://chienyuc.blog/blog/pta-intro">純文字檔</a>而已。</p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[肋眼]]></title>
             <link>https://chienyuc.blog/blog/ribeye-steak</link>
