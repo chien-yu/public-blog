@@ -13,12 +13,20 @@
             <link>https://chienyuc.blog/blog/moze-observation</link>
             <guid>https://chienyuc.blog/blog/moze-observation</guid>
             <pubDate>Thu, 19 Feb 2026 00:00:00 GMT</pubDate>
-            <description><![CDATA[從 PipperL 的這篇文章 認識了 Moze。看到同樣熱衷於紀錄的人，很好奇他們的作業模式，以及為什麼工具選擇上會不同。]]></description>
-            <content:encoded><![CDATA[<p>從 PipperL 的<a href="https://blog.serv.idv.tw/2020/05/pm2moze/" target="_blank" rel="noopener noreferrer" class="">這篇文章</a> 認識了 <a href="https://doc.moze.app/" target="_blank" rel="noopener noreferrer" class="">Moze</a>。看到同樣熱衷於紀錄的人，很好奇他們的作業模式，以及為什麼工具選擇上會不同。</p>
+            <description><![CDATA[這是我的「BlogBlog 同樂會 - 2026 年 2 月」的投稿文章。本月主題是「只有我這樣嗎？」，由 Wiwi 主持。如果你有自己的部落格，歡迎一起來參加！]]></description>
+            <content:encoded><![CDATA[<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>同樂會</div><div class="admonitionContent_BuS1"><p>這是我的「<a href="https://blogblog.club/party" target="_blank" rel="noopener noreferrer" class="">BlogBlog 同樂會 - 2026 年 2 月</a>」的投稿文章。本月主題是「<a href="https://wiwi.blog/blog/blogblog-party-feb-2026/" target="_blank" rel="noopener noreferrer" class="">只有我這樣嗎？</a>」，由 Wiwi 主持。如果你有自己的部落格，歡迎一起來參加！</p></div></div>
+<p>從 PipperL 的<a href="https://blog.serv.idv.tw/2020/05/pm2moze/" target="_blank" rel="noopener noreferrer" class="">這篇文章</a> 認識了 <a href="https://doc.moze.app/" target="_blank" rel="noopener noreferrer" class="">Moze</a>。看到同樣熱衷於紀錄的人，很好奇他們的作業模式，以及為什麼工具選擇上會不同。</p>
 <p>Moze 這個介面跟其他手機 App 的複雜度差不多，一般使用者的第一步，新增帳戶頁面就有 12 個設定。</p>
 <img src="https://chienyuc.blog/assets/images/new-account-30bf69a33d9764720e41edef86f024c6.jpg" alt="新增帳戶頁面" style="width:50%">
 <p>許多在手機或平板上的記帳工具，可以方便使用者「隨手記錄」，但我覺得這是不必要的步驟。「隨時紀錄」增加的是時間軸上的帳目準確度，但這個意義大嗎？對我而言，要養成買飯、網購都要馬上紀錄的習慣太難。</p>
-<p>我因為消費都是透過信用卡，每個月的帳單就已彙整了完整紀錄。所以我可以每個月只記錄一次，當然在記錄之前，這個月的帳目就不是準確地。但紀錄的過程只要透過大型語言模型就可以自動分類。之所以任意的語言模型可以接到記帳工具中，關鍵在於我的帳本格式就是<a class="" href="https://chienyuc.blog/blog/pta-intro">純文字檔</a>而已。</p>]]></content:encoded>
+<p>我因為消費都是透過信用卡，每個月的帳單就已彙整了完整紀錄。所以我可以每個月只記錄一次，當然在記錄之前，這個月的帳目就不是準確地。但紀錄的過程只要透過大型語言模型就可以自動分類。之所以任意的語言模型可以接到記帳工具中，關鍵在於我的帳本格式就是<a class="" href="https://chienyuc.blog/blog/pta-intro">純文字檔</a>而已。</p>
+<p>當然也不是那麼勤勞的一有帳單出來就記帳，有時候某個帳戶也是兩三個月才去下載一次帳單，然後在 Antigravity 裡下指令：「請整理Ｘ帳戶 2025-11 到 2026-01 的帳單。」，等語言模型看完帳單把交易紀錄輸入進文字檔後，Antigravity 中的 <a href="https://github.com/beancount/beancount" target="_blank" rel="noopener noreferrer" class="">Beancount</a> 插件會及時檢查交易結果造成的帳戶餘額是否符合；如果語言模型列出的所有消費總和跟帳單上的總和不符，可以叫它再檢查一下，或是自己打開帳單比對。</p>
+<p>Beancount 就是我在使用的 plaintextaccounting 工具，作者寫的<a href="https://beancount.github.io/docs/index.html" target="_blank" rel="noopener noreferrer" class="">文檔</a>十分精彩，完全不輸給 Moze 的<a href="https://doc.moze.app/" target="_blank" rel="noopener noreferrer" class="">文檔</a>。既然上面都提到了 Moze 的新增帳戶頁面，那我就比較一下 Beancount 這類純文字記帳工具的新增帳戶方式吧。</p>
+<ol>
+<li class="">在電腦上新增一份文字檔。</li>
+<li class="">在文字檔中輸入 <code>2026-01-01 open Assets:Bank:Fubon</code></li>
+</ol>
+<p>就這樣！</p>]]></content:encoded>
         </item>
         <item>
             <title><![CDATA[肋眼]]></title>
