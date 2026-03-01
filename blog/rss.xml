@@ -4,10 +4,34 @@
         <title>Yu Blog Blog</title>
         <link>https://chienyuc.blog/blog</link>
         <description>Yu Blog Blog</description>
-        <lastBuildDate>Thu, 19 Feb 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 28 Feb 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[寒冬的結尾]]></title>
+            <link>https://chienyuc.blog/blog/end-of-winter</link>
+            <guid>https://chienyuc.blog/blog/end-of-winter</guid>
+            <pubDate>Sat, 28 Feb 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[這星期天氣都很好，今天到了湖邊走一圈，看著這樣的天，就知道又成功度過了一個冬季，最美好的時光不遠了，隨手拿手機拍一拍就很漂亮。這個夏天，要在好多地方度過，讓現在每個週末變成旅行社員工，一個接著一個規劃。]]></description>
+            <content:encoded><![CDATA[<p>這星期天氣都很好，今天到了湖邊走一圈，看著這樣的天，就知道又成功度過了一個冬季，最美好的時光不遠了，隨手拿手機拍一拍<sup><a href="https://chienyuc.blog/blog/end-of-winter#user-content-fn-1-63f6f2" id="user-content-fnref-1-63f6f2" data-footnote-ref="true" aria-describedby="footnote-label" class="anchorTargetStickyNavbar_Vzrq">1</a></sup>就很漂亮。這個夏天，要在好多地方度過，讓現在每個週末變成旅行社員工，一個接著一個規劃。</p>
+<p>湖畔的房子。
+<img decoding="async" loading="lazy" alt="Lake" src="https://chienyuc.blog/assets/images/IMG_2626-047a736146afc61b1e93d6e34f56228c.webp" width="1200" height="900" class="img_ev3q"></p>
+<p>望向北方。
+<img decoding="async" loading="lazy" alt="Lake" src="https://chienyuc.blog/assets/images/IMG_2627-8f0aa85f1c16503893133862ff5f56d6.webp" width="1200" height="1600" class="img_ev3q"></p>
+<p>望向西方，拍到太陽了反而變得很暗。
+<img decoding="async" loading="lazy" alt="Lake" src="https://chienyuc.blog/assets/images/IMG_2628-6d29dc1a2d2a0bd0e2ef8f9023941ccb.webp" width="1200" height="900" class="img_ev3q"></p>
+<p>試試看 darktable 把曝光調了 +1 EV，這是一個可以直接改變全部像素的設定？
+<img decoding="async" loading="lazy" alt="Lake" src="https://chienyuc.blog/assets/images/IMG_2628_exposure_+1ev-65a3246fe7e80043bedff5a56b356d8e.webp" width="1600" height="1193" class="img_ev3q"></p>
+<!-- -->
+<section data-footnotes="true" class="footnotes"><h2 class="anchor anchorTargetStickyNavbar_Vzrq sr-only" id="footnote-label">Footnotes<a href="https://chienyuc.blog/blog/end-of-winter#footnote-label" class="hash-link" aria-label="Direct link to Footnotes" title="Direct link to Footnotes" translate="no">​</a></h2>
+<ol>
+<li class="anchorTargetStickyNavbar_Vzrq" id="user-content-fn-1-63f6f2">
+<p><code>mogrify -format webp -resize 1200x -strip -quality 82 *.heic</code> <a href="https://chienyuc.blog/blog/end-of-winter#user-content-fnref-1-63f6f2" data-footnote-backref="" aria-label="Back to reference 1" class="data-footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[Moze 記帳工具觀察]]></title>
             <link>https://chienyuc.blog/blog/moze-observation</link>
