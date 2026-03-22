@@ -2,11 +2,21 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://chienyuc.blog/blog</id>
     <title>Yu Blog Blog</title>
-    <updated>2026-02-28T00:00:00.000Z</updated>
+    <updated>2026-03-21T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://chienyuc.blog/blog"/>
     <subtitle>Yu Blog Blog</subtitle>
     <icon>https://chienyuc.blog/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[兩棲艦]]></title>
+        <id>https://chienyuc.blog/blog/amphibious-warship</id>
+        <link href="https://chienyuc.blog/blog/amphibious-warship"/>
+        <updated>2026-03-21T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[最近在看美國往中東增兵，派出兩棲突擊艦的消息，想知道這樣等級的船到底有多大，台灣有沒有類似的船艦？]]></summary>
+        <content type="html"><![CDATA[<p>最近在看美國往中東增兵，派出<a href="https://www.facebook.com/GreaterNewYorkandOurLittleThings/posts/pfbid02SaGEf2rVVmGEdTMoKBrcehufQ1fbXjgWBztY52WGrbz5pCJ6Jqv4iaLhtcJwV3gMl" target="_blank" rel="noopener noreferrer" class="">兩棲突擊艦</a>的消息，想知道這樣等級的船到底有多大，台灣有沒有類似的船艦？</p>
+<p>原來這幾年才開始的國艦國造，能做出最接近的船就是<a href="https://youtu.be/n-58ZfPnogY?si=NupNlxnrWiCMZ0wP" target="_blank" rel="noopener noreferrer" class="">兩棲運輸</a>等級，還是有支援陸上作戰的能力，但只能停直升機，還不到可以飛戰鬥機的等級。在這個之前，靠美國的二手船艦，海軍沒什麼可以穩定派上用場的船吧，連 2000 年才拿來的<a href="https://www.youtube.com/watch?v=QbsUbWT2aqQ" target="_blank" rel="noopener noreferrer" class="">旭海艦</a>，從下水到現在已經超過半個世紀，居然現在還能使用。</p>
+<p>幾週前在公司跟中國同事聊天，又驗證到不同訊息管道能帶來的認知差異之大，每天看中國媒體宣傳，應該會覺得美國要輸了吧，實在不知道要怎麼跟他解釋這一切的錯誤認知，就算證明我的觀點是對了又能怎樣，他們能不要再被洗腦嗎？</p>]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[寒冬的結尾]]></title>
         <id>https://chienyuc.blog/blog/end-of-winter</id>
