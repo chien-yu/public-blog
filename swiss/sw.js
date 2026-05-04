@@ -1,13 +1,15 @@
-const CACHE_NAME = "swiss-trip-v1";
+const CACHE_NAME = "swiss-trip-v5";
 const APP_SHELL = [
-  "./",
-  "./index.html",
-  "./styles.css",
-  "./app.js",
-  "./trip-data.json",
-  "./manifest.webmanifest",
-  "./icon.svg",
-  "./landscape.svg"
+  "/swiss/",
+  "/swiss/index.html",
+  "/swiss/calendar.html",
+  "/swiss/styles.css",
+  "/swiss/app.js",
+  "/swiss/calendar.js",
+  "/swiss/trip-data.json",
+  "/swiss/manifest.webmanifest",
+  "/swiss/icon.svg",
+  "/swiss/landscape.svg"
 ];
 
 self.addEventListener("install", (event) => {
@@ -41,6 +43,6 @@ self.addEventListener("fetch", (event) => {
         caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
         return response;
       })
-      .catch(() => caches.match(event.request).then((cached) => cached || caches.match("./index.html")))
+      .catch(() => caches.match(event.request).then((cached) => cached || caches.match("/swiss/index.html")))
   );
 });

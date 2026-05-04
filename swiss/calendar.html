@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Swiss Trip" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>瑞士家庭旅行</title>
+    <title>旅行月曆</title>
     <link rel="manifest" href="/swiss/manifest.webmanifest" />
     <link rel="icon" href="/swiss/icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/swiss/icon.svg" />
@@ -17,22 +17,22 @@
     <header class="topbar">
       <div>
         <p class="eyebrow">Family Switzerland</p>
-        <h1>瑞士家庭旅行</h1>
+        <h1>旅行月曆</h1>
       </div>
       <span id="networkStatus" class="status">檢查中</span>
     </header>
 
     <nav class="view-nav" aria-label="頁面切換">
-      <a class="active" href="/swiss/">時間線</a>
-      <a href="/swiss/calendar.html">Calendar</a>
+      <a href="/swiss/">時間線</a>
+      <a class="active" href="/swiss/calendar.html">Calendar</a>
     </nav>
 
     <main class="app-shell">
-      <section class="hero" aria-labelledby="viewTitle">
+      <section class="hero calendar-hero" aria-labelledby="calendarTitle">
         <div>
-          <p class="eyebrow" id="viewEyebrow">目前視角</p>
-          <h2 id="viewTitle">載入行程中</h2>
-          <p id="viewSummary">正在整理家庭旅行時間線...</p>
+          <p class="eyebrow" id="calendarEyebrow">Calendar View</p>
+          <h2 id="calendarTitle">載入月曆中</h2>
+          <p id="calendarSummary">用月曆方式看每一天住哪裡、在哪個城市、怎麼移動。</p>
         </div>
         <div class="offline-pill" id="offlineReady">離線資料尚未確認</div>
       </section>
@@ -45,28 +45,18 @@
         <div id="rolePicker" class="segmented" role="tablist" aria-label="旅人角色"></div>
       </section>
 
-      <section class="tools" aria-label="旅行資料搜尋">
-        <label for="searchBox">快速搜尋</label>
-        <input id="searchBox" type="search" placeholder="搜尋飯店、火車、機場、票券、緊急資訊" autocomplete="off" />
-      </section>
-
       <section>
         <div class="section-title">
           <div>
-            <p class="eyebrow" id="timelineEyebrow">時間線</p>
-            <h2 id="timelineTitle">行程</h2>
+            <p class="eyebrow">Calendar</p>
+            <h2 id="calendarRange">行程月曆</h2>
           </div>
           <button id="refreshButton" type="button">更新離線資料</button>
         </div>
-        <div id="itinerary" class="timeline" aria-live="polite"></div>
-      </section>
-
-      <section>
-        <h2>重要資訊</h2>
-        <div id="essentials" class="grid" aria-live="polite"></div>
+        <div id="calendar" class="calendar-list" aria-live="polite"></div>
       </section>
     </main>
 
-    <script src="/swiss/app.js" defer></script>
+    <script src="/swiss/calendar.js" defer></script>
   </body>
 </html>

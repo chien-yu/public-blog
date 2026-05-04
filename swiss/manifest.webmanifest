@@ -2,14 +2,14 @@
   "name": "Swiss Family Trip",
   "short_name": "Swiss Trip",
   "description": "Offline family travel dashboard for Switzerland.",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/swiss/",
+  "scope": "/swiss/",
   "display": "standalone",
   "background_color": "#f7faf7",
   "theme_color": "#0f766e",
   "icons": [
     {
-      "src": "./icon.svg",
+      "src": "/swiss/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
