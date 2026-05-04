@@ -49,7 +49,7 @@ function render() {
 }
 
 async function loadData() {
-  const response = await fetch("./trip-data.json", { cache: "no-cache" });
+  const response = await fetch("/swiss/trip-data.json", { cache: "no-cache" });
   state.data = await response.json();
   render();
 }
@@ -61,7 +61,7 @@ async function registerServiceWorker() {
   }
 
   try {
-    const registration = await navigator.serviceWorker.register("./sw.js", { scope: "./" });
+    const registration = await navigator.serviceWorker.register("/swiss/sw.js", { scope: "/swiss/" });
     await navigator.serviceWorker.ready;
     $("#offlineReady").textContent = "離線資料已準備";
 
