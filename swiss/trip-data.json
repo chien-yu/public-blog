@@ -1,0 +1,40 @@
+{
+  "today": {
+    "title": "抵達蘇黎世",
+    "summary": "這是測試版資料。先確認 iPhone 可以加入主畫面，開過一次後切飛航模式仍可瀏覽與搜尋。"
+  },
+  "itinerary": [
+    {
+      "date": "Day 1",
+      "title": "抵達蘇黎世",
+      "summary": "機場集合、領取交通票、前往飯店放行李。",
+      "tags": ["機場", "飯店", "交通"]
+    },
+    {
+      "date": "Day 2",
+      "title": "琉森一日遊",
+      "summary": "卡貝爾橋、湖邊散步、確認晚餐訂位。",
+      "tags": ["景點", "餐廳", "火車"]
+    },
+    {
+      "date": "Day 3",
+      "title": "少女峰區域",
+      "summary": "早起搭火車，依天氣決定上山或改室內備案。",
+      "tags": ["山區", "票券", "備案"]
+    }
+  ],
+  "essentials": [
+    {
+      "title": "住宿",
+      "detail": "Hotel Sample Zurich, Check-in 15:00。正式版會放地址、電話與 Google Maps 連結。"
+    },
+    {
+      "title": "緊急聯絡",
+      "detail": "保險電話、家人聯絡方式、護照備份位置。"
+    },
+    {
+      "title": "離線測試",
+      "detail": "iPhone 用 Safari 開啟 /swiss/，分享，加入主畫面。開過一次後切飛航模式再打開。"
+    }
+  ]
+}

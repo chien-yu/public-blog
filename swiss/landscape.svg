@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 720" role="img" aria-label="Swiss mountain landscape">
+  <defs>
+    <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#88d1e8"/>
+      <stop offset="0.55" stop-color="#d5f3ed"/>
+      <stop offset="1" stop-color="#f7faf7"/>
+    </linearGradient>
+    <linearGradient id="lake" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#56b6c2"/>
+      <stop offset="1" stop-color="#0f766e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1400" height="720" fill="url(#sky)"/>
+  <circle cx="1140" cy="128" r="70" fill="#facc15"/>
+  <path d="M0 466 226 184l136 174 124-150 206 258H0Z" fill="#37615b"/>
+  <path d="M226 184 164 262l80-34 62 82 56 48-136-174Z" fill="#f5fbff"/>
+  <path d="M420 466 712 114l154 214 98-132 278 270H420Z" fill="#244944"/>
+  <path d="M712 114 620 225l108-50 96 116 42 37-154-214Z" fill="#ffffff"/>
+  <path d="M856 466 1058 240l96 116 72-82 174 192H856Z" fill="#4d746d"/>
+  <path d="M1058 240 1002 302l70-28 82 82-96-116Z" fill="#eef7f6"/>
+  <path d="M0 466h1400v254H0Z" fill="url(#lake)"/>
+  <path d="M0 544c210-48 324 36 512-4 236-50 346-78 536-18 118 37 230 25 352-20v218H0Z" fill="#e5efe9" opacity=".7"/>
+  <path d="M92 630c142-44 282-30 420 6 190 50 382 44 596-18 96-28 190-34 292-10v112H92Z" fill="#c5dfd8" opacity=".62"/>
+</svg>

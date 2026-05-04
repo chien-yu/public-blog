@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0f766e" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Swiss Trip" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Swiss Trip</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icon.svg" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Family Switzerland</p>
+        <h1>瑞士旅行</h1>
+      </div>
+      <span id="networkStatus" class="status">檢查中</span>
+    </header>
+
+    <main class="app-shell">
+      <section class="hero" aria-labelledby="todayTitle">
+        <div>
+          <p class="eyebrow">Today</p>
+          <h2 id="todayTitle">抵達蘇黎世</h2>
+          <p id="todaySummary">載入行程中...</p>
+        </div>
+        <div class="offline-pill" id="offlineReady">離線尚未確認</div>
+      </section>
+
+      <section class="tools" aria-label="旅行資料搜尋">
+        <label for="searchBox">快速搜尋</label>
+        <input id="searchBox" type="search" placeholder="搜尋飯店、火車、票券、緊急資訊" autocomplete="off" />
+      </section>
+
+      <section>
+        <div class="section-title">
+          <h2>行程</h2>
+          <button id="refreshButton" type="button">更新離線資料</button>
+        </div>
+        <div id="itinerary" class="list" aria-live="polite"></div>
+      </section>
+
+      <section>
+        <h2>重要資訊</h2>
+        <div id="essentials" class="grid" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
