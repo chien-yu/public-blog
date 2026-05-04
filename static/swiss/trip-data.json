@@ -1,40 +1,668 @@
 {
-  "today": {
-    "title": "抵達蘇黎世",
-    "summary": "這是測試版資料。先確認 iPhone 可以加入主畫面，開過一次後切飛航模式仍可瀏覽與搜尋。"
+  "schemaVersion": 2,
+  "roles": [
+    {
+      "id": "dad",
+      "label": "爸 James",
+      "groupId": "parents",
+      "groupLabel": "爸媽",
+      "heroTitle": "James：荷蘭、英國、瑞士、維也納",
+      "summary": "爸媽 5/26 從台北出發，先到荷蘭和英國，6/4 到蘇黎世和 Yu、Cho 會合，瑞士後再去維也納。",
+      "timelineTitle": "James 的行程"
+    },
+    {
+      "id": "mom",
+      "label": "媽 Jane",
+      "groupId": "parents",
+      "groupLabel": "爸媽",
+      "heroTitle": "Jane：荷蘭、英國、瑞士、維也納",
+      "summary": "目前 Jane 和 James 使用同一份爸媽行程：荷蘭、英國、瑞士共同段，最後維也納回台北。",
+      "timelineTitle": "Jane 的行程"
+    },
+    {
+      "id": "yu",
+      "label": "Yu",
+      "groupId": "yu",
+      "groupLabel": "Yu",
+      "heroTitle": "Yu：瑞士會合，6/15 前往慕尼黑",
+      "summary": "Yu 6/4 抵達蘇黎世加入瑞士共同段，6/15 下午搭車往慕尼黑，6/16 從 MUC 飛 SEA。",
+      "timelineTitle": "Yu 的行程"
+    },
+    {
+      "id": "cho",
+      "label": "Cho",
+      "groupId": "cho",
+      "groupLabel": "Cho",
+      "heroTitle": "Cho：瑞士會合，6/17 從蘇黎世離開",
+      "summary": "Cho 6/4 抵達蘇黎世加入瑞士共同段，6/15-6/16 留在蘇黎世，6/17 從 ZRH 飛 YVR。",
+      "timelineTitle": "Cho 的行程"
+    }
+  ],
+  "lodgings": {
+    "holiday-inn-express-amsterdam-sloterdijk": {
+      "name": "Holiday Inn Express Amsterdam - Sloterdijk Station by IHG",
+      "nameEn": "Holiday Inn Express Amsterdam - Sloterdijk Station by IHG",
+      "address": "阿姆斯特丹 Sloterdijk Station 附近",
+      "booking": "IHG / hotels.com 訂單 73371320283253",
+      "checkIn": "待確認",
+      "checkOut": "待確認",
+      "mapUrl": "https://maps.app.goo.gl/iuC4z9JwpSHAUxNx5"
+    },
+    "ihg-giethoorn": {
+      "name": "IHG 羊角村住宿",
+      "nameEn": "IHG Giethoorn lodging",
+      "address": "羊角村（Giethoorn）",
+      "booking": "IHG",
+      "checkIn": "待確認",
+      "checkOut": "待確認",
+      "mapUrl": ""
+    },
+    "club-quarters-trafalgar": {
+      "name": "特拉法加廣場俱樂部住宅飯店",
+      "nameEn": "Club Quarters Hotel Trafalgar Square",
+      "address": "倫敦（London）",
+      "booking": "hotels.com 訂單 73385157726206",
+      "checkIn": "2026/5/30 15:00",
+      "checkOut": "2026/6/04 12:00",
+      "mapUrl": ""
+    },
+    "hyatt-regency-jj": {
+      "name": "Hyatt Regency",
+      "nameEn": "Hyatt Regency Zurich",
+      "address": "蘇黎世（Zurich）",
+      "booking": "Jane、James 訂房 967483542",
+      "checkIn": "待確認",
+      "checkOut": "待確認",
+      "mapUrl": ""
+    },
+    "hyatt-regency-yc": {
+      "name": "Hyatt Regency",
+      "nameEn": "Hyatt Regency Zurich",
+      "address": "蘇黎世（Zurich）",
+      "booking": "Yu、Cho 訂房 6594331",
+      "checkIn": "待確認",
+      "checkOut": "待確認",
+      "mapUrl": ""
+    },
+    "hyatt-or-small-town": {
+      "name": "Hyatt 或小鎮住宿",
+      "nameEn": "Hyatt or small town lodging",
+      "address": "蘇黎世（Zurich）或小鎮",
+      "booking": "待確認",
+      "checkIn": "待確認",
+      "checkOut": "待確認",
+      "mapUrl": ""
+    },
+    "cervo-zermatt": {
+      "name": "Cervo",
+      "nameEn": "CERVO Mountain Resort",
+      "address": "策馬特（Zermatt）",
+      "booking": "待補",
+      "checkIn": "2026/6/06",
+      "checkOut": "2026/6/09",
+      "mapUrl": ""
+    },
+    "apartment-carina": {
+      "name": "Apartment Carina",
+      "nameEn": "Apartment Carina, Interlaken",
+      "address": "因特拉肯（Interlaken）",
+      "booking": "待補",
+      "checkIn": "2026/6/09",
+      "checkOut": "2026/6/14",
+      "mapUrl": ""
+    },
+    "crowne-plaza-yu-0614": {
+      "name": "Crowne Plaza Zurich",
+      "nameEn": "Crowne Plaza Zurich",
+      "address": "蘇黎世（Zurich）",
+      "booking": "Yu 訂房 88218403",
+      "checkIn": "2026/6/14",
+      "checkOut": "2026/6/15",
+      "mapUrl": ""
+    },
+    "crowne-plaza-cho-0614": {
+      "name": "Crowne Plaza Zurich",
+      "nameEn": "Crowne Plaza Zurich",
+      "address": "蘇黎世（Zurich）",
+      "booking": "Cho 訂房 45096855",
+      "checkIn": "2026/6/14",
+      "checkOut": "2026/6/17",
+      "mapUrl": ""
+    },
+    "crowne-plaza-jj-0614": {
+      "name": "Crowne Plaza Zurich",
+      "nameEn": "Crowne Plaza Zurich",
+      "address": "蘇黎世（Zurich）",
+      "booking": "Jane、James 訂房 47873930",
+      "checkIn": "2026/6/14",
+      "checkOut": "2026/6/15",
+      "mapUrl": ""
+    },
+    "park-hyatt-zurich": {
+      "name": "Park Hyatt Zurich",
+      "nameEn": "Park Hyatt Zurich",
+      "address": "蘇黎世（Zurich）",
+      "booking": "待補",
+      "checkIn": "2026/6/15",
+      "checkOut": "2026/6/17",
+      "mapUrl": ""
+    },
+    "munich-tbd": {
+      "name": "慕尼黑住宿待訂",
+      "nameEn": "Munich lodging TBD",
+      "address": "慕尼黑（Munich）",
+      "booking": "need to book",
+      "checkIn": "2026/6/15",
+      "checkOut": "2026/6/16",
+      "mapUrl": ""
+    },
+    "novotel-wien": {
+      "name": "諾富特韋恩中央車站飯店",
+      "nameEn": "Novotel Wien Hauptbahnhof",
+      "address": "維也納（Wien / Vienna）",
+      "booking": "hotels.com 訂單 73385187064243",
+      "checkIn": "2026/6/17 15:00",
+      "checkOut": "2026/6/19 12:00",
+      "mapUrl": ""
+    }
   },
-  "itinerary": [
+  "days": [
     {
-      "date": "Day 1",
-      "title": "抵達蘇黎世",
-      "summary": "機場集合、領取交通票、前往飯店放行李。",
-      "tags": ["機場", "飯店", "交通"]
+      "id": "2026-05-26",
+      "date": "2026/5/26",
+      "weekday": "二",
+      "participants": ["parents"],
+      "title": "台北出發，經新加坡前往阿姆斯特丹",
+      "location": "台北（Taipei）／新加坡（Singapore）／阿姆斯特丹（AMS）",
+      "summary": "爸媽搭新加坡航空前往阿姆斯特丹。",
+      "movements": [
+        {
+          "audience": ["parents"],
+          "time": "14:20",
+          "title": "台北到新加坡",
+          "detail": "新加坡航空 B36QNB，台北 14:20 -> 新加坡 18:55。"
+        },
+        {
+          "audience": ["parents"],
+          "time": "23:55",
+          "title": "新加坡到阿姆斯特丹",
+          "detail": "新加坡 23:55 -> AMS 2026/5/27 07:15。"
+        }
+      ],
+      "lodging": {}
     },
     {
-      "date": "Day 2",
-      "title": "琉森一日遊",
-      "summary": "卡貝爾橋、湖邊散步、確認晚餐訂位。",
-      "tags": ["景點", "餐廳", "火車"]
+      "id": "2026-05-27",
+      "date": "2026/5/27",
+      "weekday": "三",
+      "participants": ["parents"],
+      "title": "抵達阿姆斯特丹",
+      "location": "阿姆斯特丹（AMS）",
+      "summary": "07:15 抵達 AMS，晚上住 Holiday Inn Express Amsterdam - Sloterdijk Station by IHG。",
+      "movements": [
+        {
+          "audience": ["parents"],
+          "time": "07:15",
+          "title": "抵達 AMS",
+          "detail": "到 AMS 後進入荷蘭行程。"
+        }
+      ],
+      "lodging": {
+        "parents": "holiday-inn-express-amsterdam-sloterdijk"
+      }
     },
     {
-      "date": "Day 3",
-      "title": "少女峰區域",
-      "summary": "早起搭火車，依天氣決定上山或改室內備案。",
-      "tags": ["山區", "票券", "備案"]
+      "id": "2026-05-28",
+      "date": "2026/5/28",
+      "weekday": "四",
+      "participants": ["parents"],
+      "title": "阿姆斯特丹前往羊角村",
+      "location": "羊角村（Giethoorn）",
+      "summary": "從 AMS 到羊角村。",
+      "movements": [
+        {
+          "audience": ["parents"],
+          "time": "待確認",
+          "title": "AMS 到羊角村",
+          "detail": "交通方式待補。"
+        }
+      ],
+      "lodging": {
+        "parents": "ihg-giethoorn"
+      }
+    },
+    {
+      "id": "2026-05-29",
+      "date": "2026/5/29",
+      "weekday": "五",
+      "participants": ["parents"],
+      "title": "羊角村返回阿姆斯特丹",
+      "location": "阿姆斯特丹（AMS）",
+      "summary": "從羊角村回 AMS。",
+      "movements": [
+        {
+          "audience": ["parents"],
+          "time": "待確認",
+          "title": "羊角村到 AMS",
+          "detail": "交通方式待補。"
+        }
+      ],
+      "lodging": {
+        "parents": "holiday-inn-express-amsterdam-sloterdijk"
+      }
+    },
+    {
+      "id": "2026-05-30",
+      "date": "2026/5/30",
+      "weekday": "六",
+      "participants": ["parents"],
+      "title": "阿姆斯特丹前往倫敦",
+      "location": "倫敦（London）",
+      "summary": "爸媽從 AMS 到倫敦，入住特拉法加廣場俱樂部住宅飯店。",
+      "movements": [
+        {
+          "audience": ["parents"],
+          "time": "待確認",
+          "title": "AMS 到倫敦",
+          "detail": "交通方式待補。"
+        }
+      ],
+      "lodging": {
+        "parents": "club-quarters-trafalgar"
+      }
+    },
+    {
+      "id": "2026-05-31",
+      "date": "2026/5/31",
+      "weekday": "日",
+      "participants": ["parents"],
+      "title": "倫敦",
+      "location": "倫敦（London）",
+      "summary": "倫敦停留。",
+      "lodging": {
+        "parents": "club-quarters-trafalgar"
+      }
+    },
+    {
+      "id": "2026-06-01",
+      "date": "2026/6/01",
+      "weekday": "一",
+      "participants": ["parents"],
+      "title": "倫敦",
+      "location": "倫敦（London）",
+      "summary": "倫敦停留。",
+      "lodging": {
+        "parents": "club-quarters-trafalgar"
+      }
+    },
+    {
+      "id": "2026-06-02",
+      "date": "2026/6/02",
+      "weekday": "二",
+      "participants": ["parents"],
+      "title": "倫敦",
+      "location": "倫敦（London）",
+      "summary": "倫敦停留。",
+      "lodging": {
+        "parents": "club-quarters-trafalgar"
+      }
+    },
+    {
+      "id": "2026-06-03",
+      "date": "2026/6/03",
+      "weekday": "三",
+      "participants": ["parents"],
+      "title": "倫敦",
+      "location": "倫敦（London）",
+      "summary": "倫敦最後一晚，隔天 12:00 check out。",
+      "lodging": {
+        "parents": "club-quarters-trafalgar"
+      },
+      "notes": ["6/4 12:00 check out"]
+    },
+    {
+      "id": "2026-06-04",
+      "date": "2026/6/04",
+      "weekday": "四",
+      "dayLabel": "瑞士第一天",
+      "participants": ["all"],
+      "title": "全家在蘇黎世會合",
+      "location": "蘇黎世（Zurich）",
+      "summary": "Yu、Cho、爸媽分別抵達蘇黎世，開始瑞士共同段。",
+      "movements": [
+        {
+          "audience": ["yu"],
+          "time": "08:15",
+          "title": "Yu 抵達蘇黎世",
+          "detail": "Yu 08:15 抵達。"
+        },
+        {
+          "audience": ["cho"],
+          "time": "11:30",
+          "title": "Cho 抵達蘇黎世",
+          "detail": "Cho 11:30 抵達。"
+        },
+        {
+          "audience": ["parents"],
+          "time": "14:50",
+          "title": "爸媽從倫敦到蘇黎世",
+          "detail": "Jane & James 14:50 倫敦到蘇黎世。SWISS 訂位代號 Y2KH8V。"
+        }
+      ],
+      "lodging": {
+        "parents": "hyatt-regency-jj",
+        "yu": "hyatt-regency-yc",
+        "cho": "hyatt-regency-yc"
+      }
+    },
+    {
+      "id": "2026-06-05",
+      "date": "2026/6/05",
+      "weekday": "五",
+      "dayLabel": "瑞士第二天",
+      "participants": ["all"],
+      "title": "蘇黎世或小鎮",
+      "location": "蘇黎世（Zurich）或小鎮",
+      "summary": "移動工具：Mercedes-Benz V Class or Similar。",
+      "movements": [
+        {
+          "audience": ["all"],
+          "time": "待確認",
+          "title": "Mercedes-Benz V Class or Similar",
+          "detail": "當天行程和住宿仍待確認。"
+        }
+      ],
+      "lodging": {
+        "all": "hyatt-or-small-town"
+      }
+    },
+    {
+      "id": "2026-06-06",
+      "date": "2026/6/06",
+      "weekday": "六",
+      "dayLabel": "瑞士第三天",
+      "participants": ["all"],
+      "title": "蘇黎世前往策馬特",
+      "location": "策馬特（Zermatt）",
+      "summary": "從蘇黎世到策馬特，入住 Cervo。",
+      "movements": [
+        {
+          "audience": ["all"],
+          "time": "待確認",
+          "title": "蘇黎世到策馬特",
+          "detail": "Zurich -> Zermatt。"
+        }
+      ],
+      "lodging": {
+        "all": "cervo-zermatt"
+      }
+    },
+    {
+      "id": "2026-06-07",
+      "date": "2026/6/07",
+      "weekday": "日",
+      "dayLabel": "瑞士第四天",
+      "participants": ["all"],
+      "title": "策馬特",
+      "location": "策馬特（Zermatt）",
+      "summary": "策馬特停留。",
+      "lodging": {
+        "all": "cervo-zermatt"
+      }
+    },
+    {
+      "id": "2026-06-08",
+      "date": "2026/6/08",
+      "weekday": "一",
+      "dayLabel": "瑞士第五天",
+      "participants": ["all"],
+      "title": "策馬特",
+      "location": "策馬特（Zermatt）",
+      "summary": "策馬特停留。",
+      "lodging": {
+        "all": "cervo-zermatt"
+      }
+    },
+    {
+      "id": "2026-06-09",
+      "date": "2026/6/09",
+      "weekday": "二",
+      "dayLabel": "瑞士第六天",
+      "participants": ["all"],
+      "title": "策馬特前往格林德瓦／因特拉肯",
+      "location": "因特拉肯（Interlaken）",
+      "summary": "從策馬特前往格林德瓦，再到因特拉肯住宿。",
+      "movements": [
+        {
+          "audience": ["all"],
+          "time": "待確認",
+          "title": "策馬特到格林德瓦",
+          "detail": "Zermatt -> Grindelwald。"
+        }
+      ],
+      "lodging": {
+        "all": "apartment-carina"
+      }
+    },
+    {
+      "id": "2026-06-10",
+      "date": "2026/6/10",
+      "weekday": "三",
+      "dayLabel": "瑞士第七天",
+      "participants": ["all"],
+      "title": "因特拉肯",
+      "location": "因特拉肯（Interlaken）",
+      "summary": "因特拉肯停留。",
+      "lodging": {
+        "all": "apartment-carina"
+      }
+    },
+    {
+      "id": "2026-06-11",
+      "date": "2026/6/11",
+      "weekday": "四",
+      "dayLabel": "瑞士第八天",
+      "participants": ["all"],
+      "title": "因特拉肯",
+      "location": "因特拉肯（Interlaken）",
+      "summary": "因特拉肯停留。",
+      "lodging": {
+        "all": "apartment-carina"
+      }
+    },
+    {
+      "id": "2026-06-12",
+      "date": "2026/6/12",
+      "weekday": "五",
+      "dayLabel": "瑞士第九天",
+      "participants": ["all"],
+      "title": "格林德瓦前往因特拉肯",
+      "location": "因特拉肯（Interlaken）",
+      "summary": "從格林德瓦到因特拉肯。",
+      "movements": [
+        {
+          "audience": ["all"],
+          "time": "待確認",
+          "title": "格林德瓦到因特拉肯",
+          "detail": "Grindelwald -> Interlaken。"
+        }
+      ],
+      "lodging": {
+        "all": "apartment-carina"
+      }
+    },
+    {
+      "id": "2026-06-13",
+      "date": "2026/6/13",
+      "weekday": "六",
+      "dayLabel": "瑞士第十天",
+      "participants": ["all"],
+      "title": "因特拉肯",
+      "location": "因特拉肯（Interlaken）",
+      "summary": "因特拉肯停留。",
+      "lodging": {
+        "all": "apartment-carina"
+      }
+    },
+    {
+      "id": "2026-06-14",
+      "date": "2026/6/14",
+      "weekday": "日",
+      "dayLabel": "瑞士第十一天",
+      "participants": ["all"],
+      "title": "因特拉肯經琉森到蘇黎世",
+      "location": "蘇黎世（Zurich）",
+      "summary": "從因特拉肯經琉森到蘇黎世。",
+      "movements": [
+        {
+          "audience": ["all"],
+          "time": "待確認",
+          "title": "因特拉肯經琉森到蘇黎世",
+          "detail": "Interlaken -> Luzern -> Zurich。"
+        }
+      ],
+      "lodging": {
+        "parents": "crowne-plaza-jj-0614",
+        "yu": "crowne-plaza-yu-0614",
+        "cho": "crowne-plaza-cho-0614"
+      }
+    },
+    {
+      "id": "2026-06-15",
+      "date": "2026/6/15",
+      "weekday": "一",
+      "dayLabel": "瑞士第十二天",
+      "participants": ["all"],
+      "title": "蘇黎世，Yu 前往慕尼黑",
+      "location": "蘇黎世（Zurich）／慕尼黑（Munich）",
+      "summary": "爸媽移動到 Park Hyatt；Yu 下午搭車往慕尼黑；Cho 留在蘇黎世。",
+      "movements": [
+        {
+          "audience": ["parents"],
+          "time": "待確認",
+          "title": "爸媽移動到 Park Hyatt",
+          "detail": "Jane、James move to Hyatt。"
+        },
+        {
+          "audience": ["yu"],
+          "time": "下午",
+          "title": "Yu 搭車往慕尼黑",
+          "detail": "Chien-Yu 下午搭車往慕尼黑。"
+        }
+      ],
+      "lodging": {
+        "parents": "park-hyatt-zurich",
+        "yu": "munich-tbd",
+        "cho": "crowne-plaza-cho-0614"
+      }
+    },
+    {
+      "id": "2026-06-16",
+      "date": "2026/6/16",
+      "weekday": "二",
+      "dayLabel": "瑞士第十三天",
+      "participants": ["parents", "yu", "cho"],
+      "title": "Yu 從慕尼黑離開，爸媽和 Cho 在蘇黎世",
+      "location": "蘇黎世（Zurich）／慕尼黑（MUC）",
+      "summary": "Yu 15:35 MUC -> SEA；Cho 和爸媽在蘇黎世。",
+      "movements": [
+        {
+          "audience": ["yu"],
+          "time": "15:35",
+          "title": "Yu MUC -> SEA",
+          "detail": "Chien-Yu 15:35 從慕尼黑飛西雅圖。"
+        }
+      ],
+      "lodging": {
+        "parents": "park-hyatt-zurich",
+        "cho": "crowne-plaza-cho-0614"
+      }
+    },
+    {
+      "id": "2026-06-17",
+      "date": "2026/6/17",
+      "weekday": "三",
+      "dayLabel": "瑞士第十四天",
+      "participants": ["parents", "cho"],
+      "title": "Cho 離開瑞士，爸媽前往維也納",
+      "location": "蘇黎世（Zurich）／維也納（Wien / Vienna）",
+      "summary": "Cho 13:25 ZRH -> YVR；Jane、James 10:32 RJX13479 前往維也納。",
+      "movements": [
+        {
+          "audience": ["parents"],
+          "time": "10:32",
+          "title": "爸媽搭 RJX13479 前往維也納",
+          "detail": "Jane、James 10:32 RJX13479 -> 維也納。"
+        },
+        {
+          "audience": ["cho"],
+          "time": "13:25",
+          "title": "Cho ZRH -> YVR",
+          "detail": "Cho 13:25 從蘇黎世飛溫哥華。"
+        }
+      ],
+      "lodging": {
+        "parents": "novotel-wien"
+      }
+    },
+    {
+      "id": "2026-06-18",
+      "date": "2026/6/18",
+      "weekday": "四",
+      "participants": ["parents"],
+      "title": "維也納",
+      "location": "維也納（Wien / Vienna）",
+      "summary": "爸媽在維也納。",
+      "lodging": {
+        "parents": "novotel-wien"
+      }
+    },
+    {
+      "id": "2026-06-19",
+      "date": "2026/6/19",
+      "weekday": "五",
+      "participants": ["parents"],
+      "title": "維也納出發回台北",
+      "location": "維也納（Wien / Vienna）",
+      "summary": "12:00 check out；Jane & Yi-Mao 長榮航空 BR062，維也納 17:45 出發。",
+      "movements": [
+        {
+          "audience": ["parents"],
+          "time": "17:45",
+          "title": "長榮航空 BR062",
+          "detail": "維也納 17:45 出發。"
+        }
+      ],
+      "notes": ["12:00 check out"]
+    },
+    {
+      "id": "2026-06-20",
+      "date": "2026/6/20",
+      "weekday": "六",
+      "participants": ["parents"],
+      "title": "抵達台北",
+      "location": "台北（Taipei）",
+      "summary": "長榮航空 BR062 抵達台北 16:05。",
+      "movements": [
+        {
+          "audience": ["parents"],
+          "time": "16:05",
+          "title": "抵達台北",
+          "detail": "長榮航空 BR062 抵達台北。"
+        }
+      ]
     }
   ],
   "essentials": [
     {
-      "title": "住宿",
-      "detail": "Hotel Sample Zurich, Check-in 15:00。正式版會放地址、電話與 Google Maps 連結。"
+      "type": "資料結構",
+      "title": "住宿改成獨立資料表",
+      "detail": "每天只引用住宿 id；住宿名稱、訂房、地址、Google Map 都集中在 lodgings 裡。之後任何旅行都可以套用。"
     },
     {
-      "title": "緊急聯絡",
-      "detail": "保險電話、家人聯絡方式、護照備份位置。"
-    },
-    {
-      "title": "離線測試",
-      "detail": "iPhone 用 Safari 開啟 /swiss/，分享，加入主畫面。開過一次後切飛航模式再打開。"
+      "type": "離線使用（Offline）",
+      "title": "出發前每台手機先開一次",
+      "detail": "用 Safari 開啟 /swiss/，加入主畫面，確認顯示離線資料已準備。"
     }
   ]
 }

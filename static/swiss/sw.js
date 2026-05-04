@@ -1,9 +1,11 @@
-const CACHE_NAME = "swiss-trip-v1";
+const CACHE_NAME = "swiss-trip-v5";
 const APP_SHELL = [
   "/swiss/",
   "/swiss/index.html",
+  "/swiss/calendar.html",
   "/swiss/styles.css",
   "/swiss/app.js",
+  "/swiss/calendar.js",
   "/swiss/trip-data.json",
   "/swiss/manifest.webmanifest",
   "/swiss/icon.svg",

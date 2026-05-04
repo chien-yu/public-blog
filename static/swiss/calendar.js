@@ -1,7 +1,6 @@
 const state = {
   data: null,
   selectedRole: "dad",
-  query: "",
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -11,10 +10,6 @@ function updateNetworkStatus() {
   const online = navigator.onLine;
   status.textContent = online ? "線上" : "離線";
   status.className = `status ${online ? "online" : "offline"}`;
-}
-
-function normalize(value) {
-  return String(value ?? "").toLowerCase();
 }
 
 function getRole() {
@@ -43,21 +38,18 @@ function getMovements(day, role) {
   });
 }
 
-function daySearchText(day, role) {
-  const lodging = getLodging(day, role);
-  return [
-    day.date,
-    day.weekday,
-    day.dayLabel,
-    day.location,
-    day.summary,
-    ...(day.notes || []),
-    ...getMovements(day, role).flatMap((movement) => [movement.time, movement.title, movement.detail]),
-    lodging?.name,
-    lodging?.nameEn,
-    lodging?.address,
-    lodging?.booking,
-  ].map(normalize).join(" ");
+function parseDate(day) {
+  const [year, month, date] = day.id.split("-").map(Number);
+  return new Date(year, month - 1, date);
+}
+
+function monthKey(date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+}
+
+function monthTitle(key) {
+  const [year, month] = key.split("-");
+  return `${year} 年 ${Number(month)} 月`;
 }
 
 function renderRoles() {
@@ -75,46 +67,27 @@ function renderRoles() {
   `).join("");
 }
 
-function renderMovement(movement) {
-  return `
-    <li>
-      <time>${movement.time || "待確認"}</time>
-      <div>
-        <strong>${movement.title}</strong>
-        <p>${movement.detail}</p>
-      </div>
-    </li>
-  `;
-}
-
-function renderLodging(lodging, index) {
-  if (!lodging) {
-    return `<div class="lodging-empty">住宿待確認</div>`;
-  }
-
+function renderLodging(lodging, id) {
+  if (!lodging) return `<div class="calendar-lodging muted">住宿待確認</div>`;
   const mapLink = lodging.mapUrl
     ? `<a href="${lodging.mapUrl}" target="_blank" rel="noopener">Google Map</a>`
     : `<span>地圖待補</span>`;
 
   return `
-    <div class="lodging">
-      <button class="lodging-button" type="button" aria-expanded="false" aria-controls="lodging-${index}">
-        <span>今晚住宿</span>
-        <strong>${lodging.name}${lodging.nameEn ? `（${lodging.nameEn}）` : ""}</strong>
+    <div class="calendar-lodging">
+      <button class="lodging-button compact" type="button" aria-expanded="false" aria-controls="${id}">
+        <span>住宿</span>
+        <strong>${lodging.name}</strong>
       </button>
-      <div class="lodging-detail" id="lodging-${index}" hidden>
+      <div class="lodging-detail" id="${id}" hidden>
         <dl>
           <div>
-            <dt>地址</dt>
-            <dd>${lodging.address || "待補"}</dd>
+            <dt>英文 / 備註</dt>
+            <dd>${lodging.nameEn || "待補"}</dd>
           </div>
           <div>
             <dt>訂房</dt>
             <dd>${lodging.booking || "待補"}</dd>
-          </div>
-          <div>
-            <dt>入住 / 退房</dt>
-            <dd>${lodging.checkIn || "待確認"} / ${lodging.checkOut || "待確認"}</dd>
           </div>
           <div>
             <dt>地圖</dt>
@@ -126,61 +99,65 @@ function renderLodging(lodging, index) {
   `;
 }
 
-function renderDay(day, role, index) {
-  const movements = getMovements(day, role);
+function renderDay(day, role) {
+  const date = parseDate(day);
   const lodging = getLodging(day, role);
+  const movements = getMovements(day, role);
+  const lodgingDetailId = `calendar-lodging-${day.id}`;
 
   return `
-    <article>
-      <div class="date-rail">
-        <strong>${day.date}</strong>
+    <article class="calendar-day">
+      <div class="calendar-date">
+        <strong>${date.getDate()}</strong>
         <span>${day.weekday || ""}</span>
-        ${day.dayLabel ? `<em>${day.dayLabel}</em>` : ""}
       </div>
-      <div class="event-body">
-        <p class="event-kicker">${day.location || "地點待確認"}</p>
+      <div class="calendar-day-body">
+        ${day.dayLabel ? `<p class="event-kicker">${day.dayLabel}</p>` : ""}
         <h3>${day.title}</h3>
-        <p>${day.summary || ""}</p>
-        ${movements.length ? `<ul class="movement-list">${movements.map(renderMovement).join("")}</ul>` : ""}
-        ${renderLodging(lodging, index)}
-        ${(day.notes || []).length ? `
-          <div class="notes">
-            ${day.notes.map((note) => `<p>${note}</p>`).join("")}
-          </div>
+        <p>${day.location || ""}</p>
+        ${movements.length ? `
+          <ul class="calendar-movements">
+            ${movements.slice(0, 2).map((movement) => `
+              <li><time>${movement.time || "待確認"}</time>${movement.title}</li>
+            `).join("")}
+          </ul>
         ` : ""}
+        ${renderLodging(lodging, lodgingDetailId)}
       </div>
     </article>
   `;
 }
 
+function renderMonth(key, days, role) {
+  return `
+    <section class="calendar-month" aria-labelledby="month-${key}">
+      <h2 id="month-${key}">${monthTitle(key)}</h2>
+      <div class="calendar-grid">
+        ${days.map((day) => renderDay(day, role)).join("")}
+      </div>
+    </section>
+  `;
+}
+
 function render() {
   if (!state.data) return;
-
   const role = getRole();
-  const query = state.query.trim().toLowerCase();
-  const days = state.data.days
-    .filter((day) => appliesTo(day, role))
-    .filter((day) => daySearchText(day, role).includes(query));
+  const days = state.data.days.filter((day) => appliesTo(day, role));
+  const groups = new Map();
 
-  $("#viewEyebrow").textContent = role.groupLabel;
-  $("#viewTitle").textContent = role.heroTitle;
-  $("#viewSummary").textContent = role.summary;
-  $("#timelineEyebrow").textContent = `${role.label} 的視角`;
-  $("#timelineTitle").textContent = role.timelineTitle;
+  for (const day of days) {
+    const key = monthKey(parseDate(day));
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(day);
+  }
+
+  $("#calendarEyebrow").textContent = role.groupLabel;
+  $("#calendarTitle").textContent = `${role.label} 的旅行月曆`;
+  $("#calendarSummary").textContent = role.summary;
+  $("#calendarRange").textContent = `${days[0]?.date || ""} - ${days.at(-1)?.date || ""}`;
 
   renderRoles();
-
-  $("#itinerary").innerHTML = days.length
-    ? days.map((day, index) => renderDay(day, role, index)).join("")
-    : `<div class="empty">找不到符合「${state.query}」的行程。</div>`;
-
-  $("#essentials").innerHTML = state.data.essentials.map((item) => `
-    <article>
-      <p class="event-kicker">${item.type}</p>
-      <h3>${item.title}</h3>
-      <p>${item.detail}</p>
-    </article>
-  `).join("");
+  $("#calendar").innerHTML = [...groups.entries()].map(([key, monthDays]) => renderMonth(key, monthDays, role)).join("");
 }
 
 async function loadData() {
@@ -199,7 +176,6 @@ async function registerServiceWorker() {
     const registration = await navigator.serviceWorker.register("/swiss/sw.js", { scope: "/swiss/" });
     await navigator.serviceWorker.ready;
     $("#offlineReady").textContent = "離線資料已準備";
-
     registration.addEventListener("updatefound", () => {
       $("#offlineReady").textContent = "正在更新離線資料";
     });
@@ -216,18 +192,13 @@ $("#rolePicker").addEventListener("click", (event) => {
   render();
 });
 
-$("#itinerary").addEventListener("click", (event) => {
+$("#calendar").addEventListener("click", (event) => {
   const button = event.target.closest(".lodging-button");
   if (!button) return;
   const detail = document.getElementById(button.getAttribute("aria-controls"));
   const expanded = button.getAttribute("aria-expanded") === "true";
   button.setAttribute("aria-expanded", String(!expanded));
   detail.hidden = expanded;
-});
-
-$("#searchBox").addEventListener("input", (event) => {
-  state.query = event.target.value;
-  render();
 });
 
 $("#refreshButton").addEventListener("click", async () => {
@@ -245,5 +216,5 @@ window.addEventListener("offline", updateNetworkStatus);
 updateNetworkStatus();
 registerServiceWorker();
 loadData().catch(() => {
-  $("#itinerary").innerHTML = `<div class="empty">行程資料載入失敗。第一次離線測試前，請先在有網路時開啟一次。</div>`;
+  $("#calendar").innerHTML = `<div class="empty">月曆資料載入失敗。第一次離線測試前，請先在有網路時開啟一次。</div>`;
 });
