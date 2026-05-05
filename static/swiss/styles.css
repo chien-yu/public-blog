@@ -338,23 +338,148 @@ article p {
 }
 
 .movement-list li {
-  display: grid;
-  grid-template-columns: 62px minmax(0, 1fr);
-  gap: 10px;
   border-top: 1px solid var(--line);
   padding-top: 8px;
 }
 
-.movement-list time {
+.movement-button {
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 8px;
+  color: var(--ink);
+  background: #f8fbf9;
+  text-align: left;
+}
+
+.movement-button.compact {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.movement-button time {
   color: var(--accent-strong);
   font-size: 13px;
   font-weight: 800;
 }
 
-.movement-list strong {
+.movement-button strong {
   display: block;
   margin-bottom: 3px;
   font-size: 14px;
+}
+
+.movement-button small {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.movement-button em,
+.lodging-button em {
+  justify-self: end;
+  color: var(--accent-strong);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.movement-button em::after,
+.lodging-button em::after {
+  content: "⌄";
+  display: inline-block;
+  margin-left: 6px;
+  transition: transform 0.18s ease;
+}
+
+.movement-button[aria-expanded="true"],
+.lodging-button[aria-expanded="true"] {
+  border-color: rgba(15, 118, 110, 0.48);
+  background: #e8f4f1;
+}
+
+.movement-button[aria-expanded="true"] em::after,
+.lodging-button[aria-expanded="true"] em::after {
+  transform: rotate(180deg);
+}
+
+.movement-detail {
+  margin-top: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: #fff;
+}
+
+.movement-detail.compact {
+  padding: 10px;
+}
+
+.movement-detail p {
+  margin: 0 0 10px;
+}
+
+.movement-detail dl {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+}
+
+.movement-detail div {
+  display: grid;
+  gap: 3px;
+}
+
+.movement-detail dt {
+  color: var(--accent-strong);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.movement-detail dd {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.document-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.document-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(15, 118, 110, 0.28);
+  border-radius: 8px;
+  padding: 7px 9px;
+  color: var(--accent-strong);
+  background: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.document-links span {
+  border-radius: 6px;
+  padding: 2px 5px;
+  color: #fff;
+  background: var(--accent);
+  font-size: 11px;
+}
+
+.document-links.compact a {
+  padding: 5px 7px;
+  font-size: 12px;
 }
 
 .lodging,
@@ -364,6 +489,7 @@ article p {
 
 .lodging-button {
   display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   width: 100%;
   min-height: 54px;
   border: 1px solid rgba(15, 118, 110, 0.28);
@@ -384,17 +510,20 @@ article p {
 }
 
 .lodging-button span {
+  grid-column: 1;
   color: var(--accent-strong);
   font-size: 12px;
   font-weight: 800;
 }
 
 .lodging-button strong {
+  grid-column: 1;
   margin-top: 2px;
   line-height: 1.35;
 }
 
 .stay-badges {
+  grid-column: 1 / -1;
   display: flex;
   flex-wrap: wrap;
   gap: 6px;

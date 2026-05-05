@@ -167,18 +167,59 @@
             "parents"
           ],
           "time": "14:20",
-          "title": "台北到新加坡",
-          "detail": "新加坡航空 B36QNB，台北 14:20 -> 新加坡 18:55。"
+          "title": "新加坡航空 SQ877：台北到新加坡",
+          "summary": "台北 14:20 -> 新加坡 18:55",
+          "detail": "新加坡航空 SQ877，台北到新加坡。",
+          "detailItems": [
+            {
+              "label": "航班",
+              "value": "Singapore Airlines SQ877"
+            },
+            {
+              "label": "出發",
+              "value": "14:20 台北（Taipei）"
+            },
+            {
+              "label": "抵達",
+              "value": "18:55 新加坡（Singapore）"
+            },
+            {
+              "label": "訂位代號",
+              "value": "B36QNB"
+            }
+          ]
         },
         {
           "audience": [
             "parents"
           ],
           "time": "23:55",
-          "title": "新加坡到阿姆斯特丹",
-          "detail": "新加坡 23:55 -> AMS 2026/5/27 07:15。"
+          "title": "新加坡航空 SQ324：新加坡到阿姆斯特丹",
+          "summary": "新加坡 23:55 -> AMS 2026/5/27 07:15",
+          "detail": "新加坡航空 SQ324，新加坡到阿姆斯特丹。",
+          "detailItems": [
+            {
+              "label": "航班",
+              "value": "Singapore Airlines SQ324"
+            },
+            {
+              "label": "出發",
+              "value": "23:55 新加坡（Singapore）"
+            },
+            {
+              "label": "抵達",
+              "value": "2026/5/27 07:15 阿姆斯特丹（AMS）"
+            },
+            {
+              "label": "訂位代號",
+              "value": "B36QNB"
+            }
+          ]
         }
       ],
+      "overnight": {
+        "parents": "機上過夜"
+      },
       "lodging": {}
     },
     {
@@ -238,7 +279,7 @@
       ],
       "title": "羊角村返回阿姆斯特丹",
       "location": "阿姆斯特丹（AMS）",
-      "summary": "阿姆斯特丹住宿第三晚。羊角村只是前一天遊玩目標，不是換住宿。",
+      "summary": "阿姆斯特丹住宿第三晚。",
       "movements": [
         {
           "audience": [
@@ -268,9 +309,56 @@
           "audience": [
             "parents"
           ],
-          "time": "待確認",
-          "title": "AMS 到倫敦",
-          "detail": "交通方式待補。"
+          "time": "12:40",
+          "title": "Eurostar 9143：阿姆斯特丹到倫敦",
+          "summary": "Amsterdam Centraal 12:40 -> London St Pancras Int'l 15:57",
+          "detail": "這段要抓得比較早到站：票券建議 11:25 抵達 Amsterdam Centraal 的 Eurostar UK Terminal，先過安檢和英國邊境檢查。",
+          "detailItems": [
+            {
+              "label": "建議抵達",
+              "value": "11:25 到 Amsterdam Centraal 的 Eurostar UK Terminal"
+            },
+            {
+              "label": "出發",
+              "value": "12:40 Amsterdam Centraal"
+            },
+            {
+              "label": "抵達",
+              "value": "15:57 London St Pancras Int'l"
+            },
+            {
+              "label": "車次",
+              "value": "Eurostar 9143"
+            },
+            {
+              "label": "Jane 座位",
+              "value": "6 車 83 座"
+            },
+            {
+              "label": "James 座位",
+              "value": "6 車 84 座"
+            },
+            {
+              "label": "James 英國 ETA",
+              "value": "2020-0000-4842-2801"
+            },
+            {
+              "label": "Jane 英國 ETA",
+              "value": "2020-0000-4842-3223"
+            }
+          ],
+          "documents": [
+            {
+              "label": "Jane 電子票",
+              "type": "PDF",
+              "href": "/swiss/tickets/eurostar-jane-ticket.pdf"
+            },
+            {
+              "label": "James 電子票",
+              "type": "PDF",
+              "href": "/swiss/tickets/eurostar-yi-mao-ticket.pdf"
+            }
+          ]
         }
       ],
       "lodging": {
