@@ -757,4 +757,27 @@ article p {
   .calendar-day {
     min-height: 0;
   }
+
+  .movement-button {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 8px;
+  }
+
+  .movement-button time {
+    grid-column: 1 / -1;
+  }
+
+  .movement-button span {
+    grid-column: 1;
+    min-width: 0;
+  }
+
+  .movement-button em {
+    grid-column: 2;
+    align-self: end;
+  }
+
+  .movement-button.compact {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
 }
