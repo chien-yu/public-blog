@@ -36,11 +36,33 @@ function getLodging(day, role) {
   return lodgingId ? state.data.lodgings[lodgingId] : null;
 }
 
+function getOvernight(day, role) {
+  return getRoleValue(day.overnight, role);
+}
+
+function getLodgingId(day, role) {
+  return getRoleValue(day.lodging, role);
+}
+
 function getMovements(day, role) {
   return (day.movements || []).filter((movement) => {
     const audience = movement.audience || ["all"];
     return audience.includes("all") || audience.includes(role.id) || audience.includes(role.groupId);
   });
+}
+
+function getStayContext(days, dayIndex, role) {
+  const lodgingId = getLodgingId(days[dayIndex], role);
+  if (!lodgingId) return null;
+
+  const previousId = dayIndex > 0 ? getLodgingId(days[dayIndex - 1], role) : null;
+  const nextId = dayIndex < days.length - 1 ? getLodgingId(days[dayIndex + 1], role) : null;
+
+  return {
+    lodgingId,
+    isFirstNight: lodgingId !== previousId,
+    isLastNight: lodgingId !== nextId,
+  };
 }
 
 function daySearchText(day, role) {
@@ -52,11 +74,22 @@ function daySearchText(day, role) {
     day.location,
     day.summary,
     ...(day.notes || []),
-    ...getMovements(day, role).flatMap((movement) => [movement.time, movement.title, movement.detail]),
+    ...getMovements(day, role).flatMap((movement) => [
+      movement.time,
+      movement.title,
+      movement.summary,
+      movement.detail,
+      ...(movement.detailItems || []).flatMap((item) => [item.label, item.value]),
+      ...(movement.documents || []).flatMap((document) => [document.label, document.type]),
+    ]),
     lodging?.name,
     lodging?.nameEn,
     lodging?.address,
     lodging?.booking,
+    lodging?.checkInTime,
+    lodging?.checkOutTime,
+    lodging?.stayNote,
+    getOvernight(day, role),
   ].map(normalize).join(" ");
 }
 
@@ -75,21 +108,87 @@ function renderRoles() {
   `).join("");
 }
 
-function renderMovement(movement) {
+function renderMovementDetails(movement, detailId) {
+  const detailItems = movement.detailItems || [];
+  const hasDetail = movement.detail || detailItems.length || movement.documents?.length;
+  if (!hasDetail) return "";
+
+  return `
+    <div class="movement-detail" id="${detailId}" hidden>
+      ${movement.detail ? `<p>${movement.detail}</p>` : ""}
+      ${detailItems.length ? `
+        <dl>
+          ${detailItems.map((item) => `
+            <div>
+              <dt>${item.label}</dt>
+              <dd>${item.value}</dd>
+            </div>
+          `).join("")}
+        </dl>
+      ` : ""}
+      ${renderDocuments(movement.documents)}
+    </div>
+  `;
+}
+
+function renderMovement(movement, detailId) {
   return `
     <li>
-      <time>${movement.time || "待確認"}</time>
-      <div>
-        <strong>${movement.title}</strong>
-        <p>${movement.detail}</p>
-      </div>
+      <button class="movement-button" type="button" aria-expanded="false" aria-controls="${detailId}">
+        <time>${movement.time || "待確認"}</time>
+        <span>
+          <strong>${movement.title}</strong>
+          ${movement.summary ? `<small>${movement.summary}</small>` : ""}
+        </span>
+        <em>查看細節</em>
+      </button>
+      ${renderMovementDetails(movement, detailId)}
     </li>
   `;
 }
 
-function renderLodging(lodging, index) {
+function renderDocuments(documents) {
+  if (!documents?.length) return "";
+  return `
+    <div class="document-links">
+      ${documents.map((document) => `
+        <a href="${document.href}" target="_blank" rel="noopener">
+          <span>${document.type || "PDF"}</span>
+          ${document.label}
+        </a>
+      `).join("")}
+    </div>
+  `;
+}
+
+function toggleDisclosure(button) {
+  const detail = document.getElementById(button.getAttribute("aria-controls"));
+  if (!detail) return;
+  const expanded = button.getAttribute("aria-expanded") === "true";
+  button.setAttribute("aria-expanded", String(!expanded));
+  detail.hidden = expanded;
+}
+
+function renderStayBadges(lodging, stayContext) {
+  if (!stayContext) return "";
+
+  const badges = [];
+  if (stayContext.isFirstNight) {
+    badges.push(`入住${lodging.checkInTime ? ` ${lodging.checkInTime}` : ""}`);
+  } else {
+    badges.push("續住");
+  }
+
+  if (stayContext.isLastNight) {
+    badges.push(`明早退房${lodging.checkOutTime ? ` ${lodging.checkOutTime}` : ""}`);
+  }
+
+  return `<div class="stay-badges">${badges.map((badge) => `<span>${badge}</span>`).join("")}</div>`;
+}
+
+function renderLodging(lodging, stayContext, overnight, index) {
   if (!lodging) {
-    return `<div class="lodging-empty">住宿待確認</div>`;
+    return `<div class="lodging-empty">${overnight || "住宿待確認"}</div>`;
   }
 
   const mapLink = lodging.mapUrl
@@ -101,6 +200,8 @@ function renderLodging(lodging, index) {
       <button class="lodging-button" type="button" aria-expanded="false" aria-controls="lodging-${index}">
         <span>今晚住宿</span>
         <strong>${lodging.name}${lodging.nameEn ? `（${lodging.nameEn}）` : ""}</strong>
+        ${renderStayBadges(lodging, stayContext)}
+        <em>查看住宿資訊</em>
       </button>
       <div class="lodging-detail" id="lodging-${index}" hidden>
         <dl>
@@ -113,8 +214,8 @@ function renderLodging(lodging, index) {
             <dd>${lodging.booking || "待補"}</dd>
           </div>
           <div>
-            <dt>入住 / 退房</dt>
-            <dd>${lodging.checkIn || "待確認"} / ${lodging.checkOut || "待確認"}</dd>
+            <dt>住宿備註</dt>
+            <dd>${lodging.stayNote || "待補"}</dd>
           </div>
           <div>
             <dt>地圖</dt>
@@ -126,9 +227,11 @@ function renderLodging(lodging, index) {
   `;
 }
 
-function renderDay(day, role, index) {
+function renderDay(day, role, days, index) {
   const movements = getMovements(day, role);
   const lodging = getLodging(day, role);
+  const overnight = getOvernight(day, role);
+  const stayContext = getStayContext(days, index, role);
 
   return `
     <article>
@@ -141,8 +244,8 @@ function renderDay(day, role, index) {
         <p class="event-kicker">${day.location || "地點待確認"}</p>
         <h3>${day.title}</h3>
         <p>${day.summary || ""}</p>
-        ${movements.length ? `<ul class="movement-list">${movements.map(renderMovement).join("")}</ul>` : ""}
-        ${renderLodging(lodging, index)}
+        ${movements.length ? `<ul class="movement-list">${movements.map((movement, movementIndex) => renderMovement(movement, `movement-${index}-${movementIndex}`)).join("")}</ul>` : ""}
+        ${renderLodging(lodging, stayContext, overnight, index)}
         ${(day.notes || []).length ? `
           <div class="notes">
             ${day.notes.map((note) => `<p>${note}</p>`).join("")}
@@ -171,7 +274,7 @@ function render() {
   renderRoles();
 
   $("#itinerary").innerHTML = days.length
-    ? days.map((day, index) => renderDay(day, role, index)).join("")
+    ? days.map((day, index) => renderDay(day, role, days, index)).join("")
     : `<div class="empty">找不到符合「${state.query}」的行程。</div>`;
 
   $("#essentials").innerHTML = state.data.essentials.map((item) => `
@@ -217,12 +320,9 @@ $("#rolePicker").addEventListener("click", (event) => {
 });
 
 $("#itinerary").addEventListener("click", (event) => {
-  const button = event.target.closest(".lodging-button");
+  const button = event.target.closest(".lodging-button, .movement-button");
   if (!button) return;
-  const detail = document.getElementById(button.getAttribute("aria-controls"));
-  const expanded = button.getAttribute("aria-expanded") === "true";
-  button.setAttribute("aria-expanded", String(!expanded));
-  detail.hidden = expanded;
+  toggleDisclosure(button);
 });
 
 $("#searchBox").addEventListener("input", (event) => {

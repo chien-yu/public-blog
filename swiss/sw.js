@@ -1,4 +1,4 @@
-const CACHE_NAME = "swiss-trip-v5";
+const CACHE_NAME = "swiss-trip-v9";
 const APP_SHELL = [
   "/swiss/",
   "/swiss/index.html",
@@ -7,6 +7,8 @@ const APP_SHELL = [
   "/swiss/app.js",
   "/swiss/calendar.js",
   "/swiss/trip-data.json",
+  "/swiss/tickets/eurostar-jane-ticket.pdf",
+  "/swiss/tickets/eurostar-yi-mao-ticket.pdf",
   "/swiss/manifest.webmanifest",
   "/swiss/icon.svg",
   "/swiss/landscape.svg"

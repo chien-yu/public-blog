@@ -31,11 +31,33 @@ function getLodging(day, role) {
   return lodgingId ? state.data.lodgings[lodgingId] : null;
 }
 
+function getOvernight(day, role) {
+  return getRoleValue(day.overnight, role);
+}
+
+function getLodgingId(day, role) {
+  return getRoleValue(day.lodging, role);
+}
+
 function getMovements(day, role) {
   return (day.movements || []).filter((movement) => {
     const audience = movement.audience || ["all"];
     return audience.includes("all") || audience.includes(role.id) || audience.includes(role.groupId);
   });
+}
+
+function getStayContext(days, dayIndex, role) {
+  const lodgingId = getLodgingId(days[dayIndex], role);
+  if (!lodgingId) return null;
+
+  const previousId = dayIndex > 0 ? getLodgingId(days[dayIndex - 1], role) : null;
+  const nextId = dayIndex < days.length - 1 ? getLodgingId(days[dayIndex + 1], role) : null;
+
+  return {
+    lodgingId,
+    isFirstNight: lodgingId !== previousId,
+    isLastNight: lodgingId !== nextId,
+  };
 }
 
 function parseDate(day) {
@@ -67,8 +89,25 @@ function renderRoles() {
   `).join("");
 }
 
-function renderLodging(lodging, id) {
-  if (!lodging) return `<div class="calendar-lodging muted">住宿待確認</div>`;
+function renderStayBadges(lodging, stayContext) {
+  if (!stayContext) return "";
+
+  const badges = [];
+  if (stayContext.isFirstNight) {
+    badges.push(`入住${lodging.checkInTime ? ` ${lodging.checkInTime}` : ""}`);
+  } else {
+    badges.push("續住");
+  }
+
+  if (stayContext.isLastNight) {
+    badges.push(`明早退房${lodging.checkOutTime ? ` ${lodging.checkOutTime}` : ""}`);
+  }
+
+  return `<div class="stay-badges compact">${badges.map((badge) => `<span>${badge}</span>`).join("")}</div>`;
+}
+
+function renderLodging(lodging, stayContext, overnight, id) {
+  if (!lodging) return `<div class="calendar-lodging muted">${overnight || "住宿待確認"}</div>`;
   const mapLink = lodging.mapUrl
     ? `<a href="${lodging.mapUrl}" target="_blank" rel="noopener">Google Map</a>`
     : `<span>地圖待補</span>`;
@@ -78,12 +117,14 @@ function renderLodging(lodging, id) {
       <button class="lodging-button compact" type="button" aria-expanded="false" aria-controls="${id}">
         <span>住宿</span>
         <strong>${lodging.name}</strong>
+        ${renderStayBadges(lodging, stayContext)}
+        <em>查看住宿資訊</em>
       </button>
       <div class="lodging-detail" id="${id}" hidden>
         <dl>
           <div>
             <dt>英文 / 備註</dt>
-            <dd>${lodging.nameEn || "待補"}</dd>
+            <dd>${lodging.nameEn || "待補"}${lodging.stayNote ? `；${lodging.stayNote}` : ""}</dd>
           </div>
           <div>
             <dt>訂房</dt>
@@ -99,9 +140,64 @@ function renderLodging(lodging, id) {
   `;
 }
 
-function renderDay(day, role) {
+function renderDocuments(documents) {
+  if (!documents?.length) return "";
+  return `
+    <div class="document-links compact">
+      ${documents.map((document) => `
+        <a href="${document.href}" target="_blank" rel="noopener">
+          <span>${document.type || "PDF"}</span>
+          ${document.label}
+        </a>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderMovementDetail(movement, detailId) {
+  const detailItems = movement.detailItems || [];
+  const hasDetail = movement.detail || detailItems.length || movement.documents?.length;
+  if (!hasDetail) return "";
+
+  return `
+    <div class="movement-detail compact" id="${detailId}" hidden>
+      ${movement.detail ? `<p>${movement.detail}</p>` : ""}
+      ${detailItems.length ? `
+        <dl>
+          ${detailItems.map((item) => `
+            <div>
+              <dt>${item.label}</dt>
+              <dd>${item.value}</dd>
+            </div>
+          `).join("")}
+        </dl>
+      ` : ""}
+      ${renderDocuments(movement.documents)}
+    </div>
+  `;
+}
+
+function renderMovement(movement, detailId) {
+  return `
+    <li>
+      <button class="movement-button compact" type="button" aria-expanded="false" aria-controls="${detailId}">
+        <time>${movement.time || "待確認"}</time>
+        <span>
+          <strong>${movement.title}</strong>
+          ${movement.summary ? `<small>${movement.summary}</small>` : ""}
+        </span>
+        <em>查看細節</em>
+      </button>
+      ${renderMovementDetail(movement, detailId)}
+    </li>
+  `;
+}
+
+function renderDay(day, role, roleDays) {
   const date = parseDate(day);
   const lodging = getLodging(day, role);
+  const overnight = getOvernight(day, role);
+  const stayContext = getStayContext(roleDays, roleDays.indexOf(day), role);
   const movements = getMovements(day, role);
   const lodgingDetailId = `calendar-lodging-${day.id}`;
 
@@ -117,23 +213,21 @@ function renderDay(day, role) {
         <p>${day.location || ""}</p>
         ${movements.length ? `
           <ul class="calendar-movements">
-            ${movements.slice(0, 2).map((movement) => `
-              <li><time>${movement.time || "待確認"}</time>${movement.title}</li>
-            `).join("")}
+            ${movements.slice(0, 2).map((movement, movementIndex) => renderMovement(movement, `calendar-movement-${day.id}-${movementIndex}`)).join("")}
           </ul>
         ` : ""}
-        ${renderLodging(lodging, lodgingDetailId)}
+        ${renderLodging(lodging, stayContext, overnight, lodgingDetailId)}
       </div>
     </article>
   `;
 }
 
-function renderMonth(key, days, role) {
+function renderMonth(key, days, role, roleDays) {
   return `
     <section class="calendar-month" aria-labelledby="month-${key}">
       <h2 id="month-${key}">${monthTitle(key)}</h2>
       <div class="calendar-grid">
-        ${days.map((day) => renderDay(day, role)).join("")}
+        ${days.map((day) => renderDay(day, role, roleDays)).join("")}
       </div>
     </section>
   `;
@@ -157,7 +251,7 @@ function render() {
   $("#calendarRange").textContent = `${days[0]?.date || ""} - ${days.at(-1)?.date || ""}`;
 
   renderRoles();
-  $("#calendar").innerHTML = [...groups.entries()].map(([key, monthDays]) => renderMonth(key, monthDays, role)).join("");
+  $("#calendar").innerHTML = [...groups.entries()].map(([key, monthDays]) => renderMonth(key, monthDays, role, days)).join("");
 }
 
 async function loadData() {
@@ -193,7 +287,7 @@ $("#rolePicker").addEventListener("click", (event) => {
 });
 
 $("#calendar").addEventListener("click", (event) => {
-  const button = event.target.closest(".lodging-button");
+  const button = event.target.closest(".lodging-button, .movement-button");
   if (!button) return;
   const detail = document.getElementById(button.getAttribute("aria-controls"));
   const expanded = button.getAttribute("aria-expanded") === "true";
