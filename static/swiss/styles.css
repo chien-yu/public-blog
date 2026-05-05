@@ -394,6 +394,31 @@ article p {
   line-height: 1.35;
 }
 
+.stay-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.stay-badges span {
+  border-radius: 999px;
+  padding: 4px 8px;
+  color: var(--accent-strong);
+  background: #d8eee8;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.stay-badges.compact {
+  margin-top: 6px;
+}
+
+.stay-badges.compact span {
+  padding: 3px 7px;
+  font-size: 11px;
+}
+
 .lodging-detail {
   border: 1px solid var(--line);
   border-top: 0;

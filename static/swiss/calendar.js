@@ -31,11 +31,29 @@ function getLodging(day, role) {
   return lodgingId ? state.data.lodgings[lodgingId] : null;
 }
 
+function getLodgingId(day, role) {
+  return getRoleValue(day.lodging, role);
+}
+
 function getMovements(day, role) {
   return (day.movements || []).filter((movement) => {
     const audience = movement.audience || ["all"];
     return audience.includes("all") || audience.includes(role.id) || audience.includes(role.groupId);
   });
+}
+
+function getStayContext(days, dayIndex, role) {
+  const lodgingId = getLodgingId(days[dayIndex], role);
+  if (!lodgingId) return null;
+
+  const previousId = dayIndex > 0 ? getLodgingId(days[dayIndex - 1], role) : null;
+  const nextId = dayIndex < days.length - 1 ? getLodgingId(days[dayIndex + 1], role) : null;
+
+  return {
+    lodgingId,
+    isFirstNight: lodgingId !== previousId,
+    isLastNight: lodgingId !== nextId,
+  };
 }
 
 function parseDate(day) {
@@ -67,7 +85,24 @@ function renderRoles() {
   `).join("");
 }
 
-function renderLodging(lodging, id) {
+function renderStayBadges(lodging, stayContext) {
+  if (!stayContext) return "";
+
+  const badges = [];
+  if (stayContext.isFirstNight) {
+    badges.push(`入住${lodging.checkInTime ? ` ${lodging.checkInTime}` : ""}`);
+  } else {
+    badges.push("續住");
+  }
+
+  if (stayContext.isLastNight) {
+    badges.push(`明早退房${lodging.checkOutTime ? ` ${lodging.checkOutTime}` : ""}`);
+  }
+
+  return `<div class="stay-badges compact">${badges.map((badge) => `<span>${badge}</span>`).join("")}</div>`;
+}
+
+function renderLodging(lodging, stayContext, id) {
   if (!lodging) return `<div class="calendar-lodging muted">住宿待確認</div>`;
   const mapLink = lodging.mapUrl
     ? `<a href="${lodging.mapUrl}" target="_blank" rel="noopener">Google Map</a>`
@@ -78,12 +113,13 @@ function renderLodging(lodging, id) {
       <button class="lodging-button compact" type="button" aria-expanded="false" aria-controls="${id}">
         <span>住宿</span>
         <strong>${lodging.name}</strong>
+        ${renderStayBadges(lodging, stayContext)}
       </button>
       <div class="lodging-detail" id="${id}" hidden>
         <dl>
           <div>
             <dt>英文 / 備註</dt>
-            <dd>${lodging.nameEn || "待補"}</dd>
+            <dd>${lodging.nameEn || "待補"}${lodging.stayNote ? `；${lodging.stayNote}` : ""}</dd>
           </div>
           <div>
             <dt>訂房</dt>
@@ -99,9 +135,10 @@ function renderLodging(lodging, id) {
   `;
 }
 
-function renderDay(day, role) {
+function renderDay(day, role, roleDays) {
   const date = parseDate(day);
   const lodging = getLodging(day, role);
+  const stayContext = getStayContext(roleDays, roleDays.indexOf(day), role);
   const movements = getMovements(day, role);
   const lodgingDetailId = `calendar-lodging-${day.id}`;
 
@@ -122,18 +159,18 @@ function renderDay(day, role) {
             `).join("")}
           </ul>
         ` : ""}
-        ${renderLodging(lodging, lodgingDetailId)}
+        ${renderLodging(lodging, stayContext, lodgingDetailId)}
       </div>
     </article>
   `;
 }
 
-function renderMonth(key, days, role) {
+function renderMonth(key, days, role, roleDays) {
   return `
     <section class="calendar-month" aria-labelledby="month-${key}">
       <h2 id="month-${key}">${monthTitle(key)}</h2>
       <div class="calendar-grid">
-        ${days.map((day) => renderDay(day, role)).join("")}
+        ${days.map((day) => renderDay(day, role, roleDays)).join("")}
       </div>
     </section>
   `;
@@ -157,7 +194,7 @@ function render() {
   $("#calendarRange").textContent = `${days[0]?.date || ""} - ${days.at(-1)?.date || ""}`;
 
   renderRoles();
-  $("#calendar").innerHTML = [...groups.entries()].map(([key, monthDays]) => renderMonth(key, monthDays, role)).join("");
+  $("#calendar").innerHTML = [...groups.entries()].map(([key, monthDays]) => renderMonth(key, monthDays, role, days)).join("");
 }
 
 async function loadData() {

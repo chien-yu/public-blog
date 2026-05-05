@@ -36,11 +36,29 @@ function getLodging(day, role) {
   return lodgingId ? state.data.lodgings[lodgingId] : null;
 }
 
+function getLodgingId(day, role) {
+  return getRoleValue(day.lodging, role);
+}
+
 function getMovements(day, role) {
   return (day.movements || []).filter((movement) => {
     const audience = movement.audience || ["all"];
     return audience.includes("all") || audience.includes(role.id) || audience.includes(role.groupId);
   });
+}
+
+function getStayContext(days, dayIndex, role) {
+  const lodgingId = getLodgingId(days[dayIndex], role);
+  if (!lodgingId) return null;
+
+  const previousId = dayIndex > 0 ? getLodgingId(days[dayIndex - 1], role) : null;
+  const nextId = dayIndex < days.length - 1 ? getLodgingId(days[dayIndex + 1], role) : null;
+
+  return {
+    lodgingId,
+    isFirstNight: lodgingId !== previousId,
+    isLastNight: lodgingId !== nextId,
+  };
 }
 
 function daySearchText(day, role) {
@@ -57,6 +75,9 @@ function daySearchText(day, role) {
     lodging?.nameEn,
     lodging?.address,
     lodging?.booking,
+    lodging?.checkInTime,
+    lodging?.checkOutTime,
+    lodging?.stayNote,
   ].map(normalize).join(" ");
 }
 
@@ -87,7 +108,24 @@ function renderMovement(movement) {
   `;
 }
 
-function renderLodging(lodging, index) {
+function renderStayBadges(lodging, stayContext) {
+  if (!stayContext) return "";
+
+  const badges = [];
+  if (stayContext.isFirstNight) {
+    badges.push(`入住${lodging.checkInTime ? ` ${lodging.checkInTime}` : ""}`);
+  } else {
+    badges.push("續住");
+  }
+
+  if (stayContext.isLastNight) {
+    badges.push(`明早退房${lodging.checkOutTime ? ` ${lodging.checkOutTime}` : ""}`);
+  }
+
+  return `<div class="stay-badges">${badges.map((badge) => `<span>${badge}</span>`).join("")}</div>`;
+}
+
+function renderLodging(lodging, stayContext, index) {
   if (!lodging) {
     return `<div class="lodging-empty">住宿待確認</div>`;
   }
@@ -101,6 +139,7 @@ function renderLodging(lodging, index) {
       <button class="lodging-button" type="button" aria-expanded="false" aria-controls="lodging-${index}">
         <span>今晚住宿</span>
         <strong>${lodging.name}${lodging.nameEn ? `（${lodging.nameEn}）` : ""}</strong>
+        ${renderStayBadges(lodging, stayContext)}
       </button>
       <div class="lodging-detail" id="lodging-${index}" hidden>
         <dl>
@@ -113,8 +152,8 @@ function renderLodging(lodging, index) {
             <dd>${lodging.booking || "待補"}</dd>
           </div>
           <div>
-            <dt>入住 / 退房</dt>
-            <dd>${lodging.checkIn || "待確認"} / ${lodging.checkOut || "待確認"}</dd>
+            <dt>住宿備註</dt>
+            <dd>${lodging.stayNote || "待補"}</dd>
           </div>
           <div>
             <dt>地圖</dt>
@@ -126,9 +165,10 @@ function renderLodging(lodging, index) {
   `;
 }
 
-function renderDay(day, role, index) {
+function renderDay(day, role, days, index) {
   const movements = getMovements(day, role);
   const lodging = getLodging(day, role);
+  const stayContext = getStayContext(days, index, role);
 
   return `
     <article>
@@ -142,7 +182,7 @@ function renderDay(day, role, index) {
         <h3>${day.title}</h3>
         <p>${day.summary || ""}</p>
         ${movements.length ? `<ul class="movement-list">${movements.map(renderMovement).join("")}</ul>` : ""}
-        ${renderLodging(lodging, index)}
+        ${renderLodging(lodging, stayContext, index)}
         ${(day.notes || []).length ? `
           <div class="notes">
             ${day.notes.map((note) => `<p>${note}</p>`).join("")}
@@ -171,7 +211,7 @@ function render() {
   renderRoles();
 
   $("#itinerary").innerHTML = days.length
-    ? days.map((day, index) => renderDay(day, role, index)).join("")
+    ? days.map((day, index) => renderDay(day, role, days, index)).join("")
     : `<div class="empty">找不到符合「${state.query}」的行程。</div>`;
 
   $("#essentials").innerHTML = state.data.essentials.map((item) => `
