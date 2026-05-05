@@ -1,4 +1,4 @@
-const CACHE_NAME = "swiss-trip-v9";
+const CACHE_NAME = "swiss-trip-v10";
 const APP_SHELL = [
   "/swiss/",
   "/swiss/index.html",
