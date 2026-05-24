@@ -14,41 +14,46 @@
     <link rel="stylesheet" href="/swiss/styles.css" />
   </head>
   <body>
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">Family Switzerland</p>
-        <h1>瑞士家庭旅行</h1>
-      </div>
-      <span id="networkStatus" class="status">檢查中</span>
-    </header>
+    <div class="sticky-header">
+      <header class="topbar">
+        <div class="topbar-brand">
+          <div>
+            <p class="eyebrow">Family Switzerland</p>
+            <h1>瑞士家庭旅行</h1>
+          </div>
+          <div class="topbar-status-group">
+            <span id="networkStatus" class="status">檢查中</span>
+            <span id="offlineReady" class="status">離線資料尚未確認</span>
+          </div>
+        </div>
 
-    <nav class="view-nav" aria-label="頁面切換">
-      <a class="active" href="/swiss/">時間線</a>
-      <a href="/swiss/calendar.html">Calendar</a>
-    </nav>
+        <div class="topbar-time-control">
+          <span class="current-time-display" id="currentTimeDisplay">--</span>
+          <label class="toggle-switch compact">
+            <input type="checkbox" id="toggleCustomTime" />
+            <span>自訂時間</span>
+          </label>
+          <div class="custom-time-inputs compact" id="customTimeInputs" hidden>
+            <input type="datetime-local" id="customDateTime" />
+            <input type="text" id="customTimezone" list="timezoneSuggestions" placeholder="時區 (如 Europe/Zurich)" />
+            <datalist id="timezoneSuggestions">
+              <option value="Europe/Zurich">歐洲中部時間 (瑞士/荷蘭/維也納)</option>
+              <option value="Europe/London">英國時間</option>
+              <option value="Asia/Taipei">台北時間</option>
+              <option value="America/New_York">紐約時間</option>
+              <option value="Asia/Tokyo">東京時間</option>
+            </datalist>
+          </div>
+        </div>
+      </header>
+
+      <nav class="view-nav" aria-label="頁面切換">
+        <a class="active" href="/swiss/">時間線</a>
+        <a href="/swiss/calendar.html">Calendar</a>
+      </nav>
+    </div>
 
     <main class="app-shell">
-      <section class="hero" aria-labelledby="viewTitle">
-        <div>
-          <p class="eyebrow" id="viewEyebrow">目前視角</p>
-          <h2 id="viewTitle">載入行程中</h2>
-          <p id="viewSummary">正在整理家庭旅行時間線...</p>
-        </div>
-        <div class="offline-pill" id="offlineReady">離線資料尚未確認</div>
-      </section>
-
-      <section class="role-panel" aria-label="選擇旅人視角">
-        <div>
-          <p class="eyebrow">Role</p>
-          <h2>選擇視角</h2>
-        </div>
-        <div id="rolePicker" class="segmented" role="tablist" aria-label="旅人角色"></div>
-      </section>
-
-      <section class="tools" aria-label="旅行資料搜尋">
-        <label for="searchBox">快速搜尋</label>
-        <input id="searchBox" type="search" placeholder="搜尋飯店、火車、機場、票券、緊急資訊" autocomplete="off" />
-      </section>
 
       <section>
         <div class="section-title">
@@ -64,6 +69,19 @@
       <section>
         <h2>重要資訊</h2>
         <div id="essentials" class="grid" aria-live="polite"></div>
+      </section>
+
+      <section class="tools" aria-label="旅行資料搜尋">
+        <label for="searchBox">快速搜尋</label>
+        <input id="searchBox" type="search" placeholder="搜尋飯店、火車、機場、票券、緊急資訊" autocomplete="off" />
+      </section>
+
+      <section class="role-panel" aria-label="選擇旅人視角">
+        <div>
+          <p class="eyebrow">Role</p>
+          <h2>選擇視角</h2>
+        </div>
+        <div id="rolePicker" class="segmented" role="tablist" aria-label="旅人角色"></div>
       </section>
     </main>
 

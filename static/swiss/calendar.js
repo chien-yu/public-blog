@@ -1,7 +1,100 @@
 const state = {
   data: null,
-  selectedRole: "dad",
+  selectedRole: localStorage.getItem("swiss_trip_role") || "dad",
+  useCustomTime: localStorage.getItem("swiss_trip_use_custom") === "true",
+  customTimeValue: localStorage.getItem("swiss_trip_custom_value") || "2026-06-04T12:00",
+  customTimezoneValue: localStorage.getItem("swiss_trip_custom_timezone") || "Europe/Zurich",
 };
+
+// Dynamic timezone and absolute timestamp helper logic
+function getDayTimezone(day) {
+  if (!day || !day.location) return "Europe/Zurich";
+  const loc = day.location.toLowerCase();
+  if (loc.includes("台北") || loc.includes("taipei")) {
+    return "Asia/Taipei";
+  }
+  if (loc.includes("新加坡") || loc.includes("singapore")) {
+    return "Asia/Singapore";
+  }
+  if (loc.includes("倫敦") || loc.includes("london")) {
+    return "Europe/London";
+  }
+  return "Europe/Zurich";
+}
+
+function isValidTimezone(tz) {
+  try {
+    if (!tz) return false;
+    Intl.DateTimeFormat(undefined, { timeZone: tz });
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function getActiveTimezone() {
+  if (state.useCustomTime && isValidTimezone(state.customTimezoneValue)) {
+    return state.customTimezoneValue;
+  }
+  const now = new Date();
+  const formattedZurich = new Intl.DateTimeFormat("en-US", { timeZone: "Europe/Zurich", year: "numeric", month: "2-digit", day: "2-digit" }).format(now);
+  const [m, d, y] = formattedZurich.split("/");
+  const todayStr = `${y}-${m}-${d}`;
+  const todayDay = state.data?.days.find(day => day.id === todayStr);
+  return getDayTimezone(todayDay);
+}
+
+function getAbsoluteTimestamp(dateStr, timeStr, timezone) {
+  const [year, month, day] = dateStr.split("/").join("-").split("-").map(Number);
+  const [hour, minute] = timeStr.split(":").map(Number);
+  
+  const utcDate = new Date(Date.UTC(year, month - 1, day, hour, minute));
+  
+  const tz = isValidTimezone(timezone) ? timezone : "Europe/Zurich";
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: tz,
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false
+  });
+  
+  const parts = formatter.formatToParts(utcDate);
+  const getPart = (type) => parts.find(p => p.type === type).value;
+  
+  const tYear = Number(getPart("year"));
+  const tMonth = Number(getPart("month"));
+  const tDay = Number(getPart("day"));
+  let tHour = Number(getPart("hour"));
+  if (tHour === 24) tHour = 0;
+  const tMinute = Number(getPart("minute"));
+  
+  const localMs = Date.UTC(tYear, tMonth - 1, tDay, tHour, tMinute);
+  const offsetMs = localMs - utcDate.getTime();
+  
+  return utcDate.getTime() - offsetMs;
+}
+
+function formatDisplayTime(timestamp, tz) {
+  const targetTz = isValidTimezone(tz) ? tz : "Europe/Zurich";
+  const formatter = new Intl.DateTimeFormat("zh-Hant", {
+    timeZone: targetTz,
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: false
+  });
+  let tzLabel = targetTz;
+  if (targetTz === "Europe/Zurich") tzLabel = "歐洲中部時間";
+  else if (targetTz === "Europe/London") tzLabel = "英國時間";
+  else if (targetTz === "Asia/Taipei") tzLabel = "台北時間";
+  return `${formatter.format(new Date(timestamp))} (${tzLabel})`;
+}
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -245,9 +338,22 @@ function render() {
     groups.get(key).push(day);
   }
 
-  $("#calendarEyebrow").textContent = role.groupLabel;
-  $("#calendarTitle").textContent = `${role.label} 的旅行月曆`;
-  $("#calendarSummary").textContent = role.summary;
+  // Compute absolute active timestamp and timezone
+  const activeTz = getActiveTimezone();
+  let activeTimestamp;
+  if (state.useCustomTime) {
+    const [datePart, timePart] = state.customTimeValue.split("T");
+    activeTimestamp = getAbsoluteTimestamp(datePart, timePart || "00:00", activeTz);
+  } else {
+    activeTimestamp = Date.now();
+  }
+
+  // Update current time display if element exists
+  const timeDisplayEl = $("#currentTimeDisplay");
+  if (timeDisplayEl) {
+    timeDisplayEl.textContent = formatDisplayTime(activeTimestamp, activeTz);
+  }
+
   $("#calendarRange").textContent = `${days[0]?.date || ""} - ${days.at(-1)?.date || ""}`;
 
   renderRoles();
@@ -283,6 +389,7 @@ $("#rolePicker").addEventListener("click", (event) => {
   const button = event.target.closest("[data-role-id]");
   if (!button) return;
   state.selectedRole = button.dataset.roleId;
+  localStorage.setItem("swiss_trip_role", state.selectedRole);
   render();
 });
 
@@ -304,11 +411,56 @@ $("#refreshButton").addEventListener("click", async () => {
   $("#offlineReady").textContent = "離線資料已更新";
 });
 
+function initTimeSimulationListeners() {
+  const toggle = $("#toggleCustomTime");
+  const inputsContainer = $("#customTimeInputs");
+  const dateTimeInput = $("#customDateTime");
+  const timezoneSelect = $("#customTimezone");
+
+  if (!toggle || !inputsContainer || !dateTimeInput) return;
+
+  toggle.checked = state.useCustomTime;
+  inputsContainer.hidden = !state.useCustomTime;
+  dateTimeInput.value = state.customTimeValue;
+  if (timezoneSelect) {
+    timezoneSelect.value = state.customTimezoneValue;
+  }
+
+  toggle.addEventListener("change", (e) => {
+    state.useCustomTime = e.target.checked;
+    localStorage.setItem("swiss_trip_use_custom", String(state.useCustomTime));
+    inputsContainer.hidden = !state.useCustomTime;
+    render();
+  });
+
+  dateTimeInput.addEventListener("input", (e) => {
+    state.customTimeValue = e.target.value;
+    localStorage.setItem("swiss_trip_custom_value", state.customTimeValue);
+    render();
+  });
+
+  if (timezoneSelect) {
+    timezoneSelect.addEventListener("input", (e) => {
+      state.customTimezoneValue = e.target.value;
+      localStorage.setItem("swiss_trip_custom_timezone", state.customTimezoneValue);
+      render();
+    });
+  }
+}
+
 window.addEventListener("online", updateNetworkStatus);
 window.addEventListener("offline", updateNetworkStatus);
 
 updateNetworkStatus();
 registerServiceWorker();
+initTimeSimulationListeners();
+
+setInterval(() => {
+  if (!state.useCustomTime) {
+    render();
+  }
+}, 10000);
+
 loadData().catch(() => {
   $("#calendar").innerHTML = `<div class="empty">月曆資料載入失敗。第一次離線測試前，請先在有網路時開啟一次。</div>`;
 });
