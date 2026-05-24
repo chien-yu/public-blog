@@ -1,8 +1,104 @@
 const state = {
   data: null,
-  selectedRole: "dad",
+  selectedRole: localStorage.getItem("swiss_trip_role") || "dad",
   query: "",
+  // Time simulation states
+  useCustomTime: localStorage.getItem("swiss_trip_use_custom") === "true",
+  customTimeValue: localStorage.getItem("swiss_trip_custom_value") || "2026-06-04T12:00",
+  customTimezoneValue: localStorage.getItem("swiss_trip_custom_timezone") || "Europe/Zurich",
+  nowMovementId: null,
+  nextMovementId: null,
 };
+
+// Dynamic timezone and absolute timestamp helper logic
+function getDayTimezone(day) {
+  if (!day || !day.location) return "Europe/Zurich";
+  const loc = day.location.toLowerCase();
+  if (loc.includes("台北") || loc.includes("taipei")) {
+    return "Asia/Taipei";
+  }
+  if (loc.includes("新加坡") || loc.includes("singapore")) {
+    return "Asia/Singapore";
+  }
+  if (loc.includes("倫敦") || loc.includes("london")) {
+    return "Europe/London";
+  }
+  return "Europe/Zurich";
+}
+
+function isValidTimezone(tz) {
+  try {
+    if (!tz) return false;
+    Intl.DateTimeFormat(undefined, { timeZone: tz });
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function getActiveTimezone() {
+  if (state.useCustomTime && isValidTimezone(state.customTimezoneValue)) {
+    return state.customTimezoneValue;
+  }
+  const now = new Date();
+  const formattedZurich = new Intl.DateTimeFormat("en-US", { timeZone: "Europe/Zurich", year: "numeric", month: "2-digit", day: "2-digit" }).format(now);
+  const [m, d, y] = formattedZurich.split("/");
+  const todayStr = `${y}-${m}-${d}`;
+  const todayDay = state.data?.days.find(day => day.id === todayStr);
+  return getDayTimezone(todayDay);
+}
+
+function getAbsoluteTimestamp(dateStr, timeStr, timezone) {
+  const [year, month, day] = dateStr.split("/").join("-").split("-").map(Number);
+  const [hour, minute] = timeStr.split(":").map(Number);
+  
+  const utcDate = new Date(Date.UTC(year, month - 1, day, hour, minute));
+  
+  const tz = isValidTimezone(timezone) ? timezone : "Europe/Zurich";
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: tz,
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false
+  });
+  
+  const parts = formatter.formatToParts(utcDate);
+  const getPart = (type) => parts.find(p => p.type === type).value;
+  
+  const tYear = Number(getPart("year"));
+  const tMonth = Number(getPart("month"));
+  const tDay = Number(getPart("day"));
+  let tHour = Number(getPart("hour"));
+  if (tHour === 24) tHour = 0;
+  const tMinute = Number(getPart("minute"));
+  
+  const localMs = Date.UTC(tYear, tMonth - 1, tDay, tHour, tMinute);
+  const offsetMs = localMs - utcDate.getTime();
+  
+  return utcDate.getTime() - offsetMs;
+}
+
+function formatDisplayTime(timestamp, tz) {
+  const targetTz = isValidTimezone(tz) ? tz : "Europe/Zurich";
+  const formatter = new Intl.DateTimeFormat("zh-Hant", {
+    timeZone: targetTz,
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: false
+  });
+  let tzLabel = targetTz;
+  if (targetTz === "Europe/Zurich") tzLabel = "歐洲中部時間";
+  else if (targetTz === "Europe/London") tzLabel = "英國時間";
+  else if (targetTz === "Asia/Taipei") tzLabel = "台北時間";
+  return `${formatter.format(new Date(timestamp))} (${tzLabel})`;
+}
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -49,6 +145,15 @@ function getMovements(day, role) {
     const audience = movement.audience || ["all"];
     return audience.includes("all") || audience.includes(role.id) || audience.includes(role.groupId);
   });
+}
+
+function getMovementsWithIndex(day, role) {
+  return (day.movements || [])
+    .map((movement, idx) => ({ movement, originalIndex: idx }))
+    .filter(({ movement }) => {
+      const audience = movement.audience || ["all"];
+      return audience.includes("all") || audience.includes(role.id) || audience.includes(role.groupId);
+    });
 }
 
 function getStayContext(days, dayIndex, role) {
@@ -108,13 +213,13 @@ function renderRoles() {
   `).join("");
 }
 
-function renderMovementDetails(movement, detailId) {
+function renderMovementDetails(movement, detailId, hiddenAttr = "hidden") {
   const detailItems = movement.detailItems || [];
   const hasDetail = movement.detail || detailItems.length || movement.documents?.length;
   if (!hasDetail) return "";
 
   return `
-    <div class="movement-detail" id="${detailId}" hidden>
+    <div class="movement-detail" id="${detailId}" ${hiddenAttr}>
       ${movement.detail ? `<p>${movement.detail}</p>` : ""}
       ${detailItems.length ? `
         <dl>
@@ -132,17 +237,28 @@ function renderMovementDetails(movement, detailId) {
 }
 
 function renderMovement(movement, detailId) {
+  const isNow = detailId === state.nowMovementId;
+  const isNext = detailId === state.nextMovementId;
+  const expanded = isNow ? "true" : "false";
+  const hiddenAttr = isNow ? "" : "hidden";
+
+  const badge = isNow 
+    ? `<span class="pill-badge pill-now">現在要做</span>` 
+    : (isNext ? `<span class="pill-badge pill-next">等等要做</span>` : "");
+
+  const highlightClass = isNow ? "is-now" : (isNext ? "is-next" : "");
+
   return `
-    <li>
-      <button class="movement-button" type="button" aria-expanded="false" aria-controls="${detailId}">
+    <li class="${highlightClass}">
+      <button class="movement-button" type="button" aria-expanded="${expanded}" aria-controls="${detailId}">
         <time>${movement.time || "待確認"}</time>
         <span>
-          <strong>${movement.title}</strong>
+          <strong>${movement.title}${badge}</strong>
           ${movement.summary ? `<small>${movement.summary}</small>` : ""}
         </span>
         <em>查看細節</em>
       </button>
-      ${renderMovementDetails(movement, detailId)}
+      ${renderMovementDetails(movement, detailId, hiddenAttr)}
     </li>
   `;
 }
@@ -228,7 +344,7 @@ function renderLodging(lodging, stayContext, overnight, index) {
 }
 
 function renderDay(day, role, days, index) {
-  const movements = getMovements(day, role);
+  const movementsWithIdx = getMovementsWithIndex(day, role);
   const lodging = getLodging(day, role);
   const overnight = getOvernight(day, role);
   const stayContext = getStayContext(days, index, role);
@@ -244,8 +360,8 @@ function renderDay(day, role, days, index) {
         <p class="event-kicker">${day.location || "地點待確認"}</p>
         <h3>${day.title}</h3>
         <p>${day.summary || ""}</p>
-        ${movements.length ? `<ul class="movement-list">${movements.map((movement, movementIndex) => renderMovement(movement, `movement-${index}-${movementIndex}`)).join("")}</ul>` : ""}
-        ${renderLodging(lodging, stayContext, overnight, index)}
+        ${movementsWithIdx.length ? `<ul class="movement-list">${movementsWithIdx.map(({ movement, originalIndex }) => renderMovement(movement, `movement-${day.id}-${originalIndex}`)).join("")}</ul>` : ""}
+        ${renderLodging(lodging, stayContext, overnight, day.id)}
         ${(day.notes || []).length ? `
           <div class="notes">
             ${day.notes.map((note) => `<p>${note}</p>`).join("")}
@@ -265,16 +381,73 @@ function render() {
     .filter((day) => appliesTo(day, role))
     .filter((day) => daySearchText(day, role).includes(query));
 
-  $("#viewEyebrow").textContent = role.groupLabel;
-  $("#viewTitle").textContent = role.heroTitle;
-  $("#viewSummary").textContent = role.summary;
+  // Compute absolute active timestamp and timezone
+  const activeTz = getActiveTimezone();
+  let activeTimestamp;
+  if (state.useCustomTime) {
+    const [datePart, timePart] = state.customTimeValue.split("T");
+    activeTimestamp = getAbsoluteTimestamp(datePart, timePart || "00:00", activeTz);
+  } else {
+    activeTimestamp = Date.now();
+  }
+
+  // Build a list of all movements with absolute timestamps based on their day's timezone
+  const allMovements = [];
+  for (const day of state.data.days) {
+    if (!appliesTo(day, role)) continue;
+    const dayTz = getDayTimezone(day);
+    const movementsWithIdx = getMovementsWithIndex(day, role);
+    movementsWithIdx.forEach(({ movement, originalIndex }) => {
+      const timeStr = movement.time && /^\d{2}:\d{2}$/.test(movement.time) ? movement.time : "00:00";
+      const timestamp = getAbsoluteTimestamp(day.id, timeStr, dayTz);
+      allMovements.push({
+        id: `movement-${day.id}-${originalIndex}`,
+        dayId: day.id,
+        timestamp: timestamp,
+        movement: movement
+      });
+    });
+  }
+
+  allMovements.sort((a, b) => a.timestamp - b.timestamp);
+
+  let nowMovementId = null;
+  const pastOrEqualMovements = allMovements.filter(m => m.timestamp <= activeTimestamp);
+  if (pastOrEqualMovements.length > 0) {
+    const candidateNow = pastOrEqualMovements[pastOrEqualMovements.length - 1];
+    
+    // Check if candidateNow's date matches the active date in the active timezone
+    const activeDateStr = new Intl.DateTimeFormat("en-US", { timeZone: activeTz, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(activeTimestamp));
+    const [am, ad, ay] = activeDateStr.split("/");
+    const activeDateFormatted = `${ay}-${am}-${ad}`;
+    
+    if (candidateNow.dayId === activeDateFormatted) {
+      nowMovementId = candidateNow.id;
+    }
+  }
+
+  let nextMovementId = null;
+  const candidateNext = allMovements.find(m => m.timestamp > activeTimestamp);
+  if (candidateNext) {
+    nextMovementId = candidateNext.id;
+  }
+
+  state.nowMovementId = nowMovementId;
+  state.nextMovementId = nextMovementId;
+
+  // Update current time display if element exists
+  const timeDisplayEl = $("#currentTimeDisplay");
+  if (timeDisplayEl) {
+    timeDisplayEl.textContent = formatDisplayTime(activeTimestamp, activeTz);
+  }
+
   $("#timelineEyebrow").textContent = `${role.label} 的視角`;
   $("#timelineTitle").textContent = role.timelineTitle;
 
   renderRoles();
 
   $("#itinerary").innerHTML = days.length
-    ? days.map((day, index) => renderDay(day, role, days, index)).join("")
+    ? days.map((day, idx) => renderDay(day, role, days, idx)).join("")
     : `<div class="empty">找不到符合「${state.query}」的行程。</div>`;
 
   $("#essentials").innerHTML = state.data.essentials.map((item) => `
@@ -316,6 +489,7 @@ $("#rolePicker").addEventListener("click", (event) => {
   const button = event.target.closest("[data-role-id]");
   if (!button) return;
   state.selectedRole = button.dataset.roleId;
+  localStorage.setItem("swiss_trip_role", state.selectedRole);
   render();
 });
 
@@ -339,11 +513,56 @@ $("#refreshButton").addEventListener("click", async () => {
   $("#offlineReady").textContent = "離線資料已更新";
 });
 
+function initTimeSimulationListeners() {
+  const toggle = $("#toggleCustomTime");
+  const inputsContainer = $("#customTimeInputs");
+  const dateTimeInput = $("#customDateTime");
+  const timezoneSelect = $("#customTimezone");
+
+  if (!toggle || !inputsContainer || !dateTimeInput) return;
+
+  toggle.checked = state.useCustomTime;
+  inputsContainer.hidden = !state.useCustomTime;
+  dateTimeInput.value = state.customTimeValue;
+  if (timezoneSelect) {
+    timezoneSelect.value = state.customTimezoneValue;
+  }
+
+  toggle.addEventListener("change", (e) => {
+    state.useCustomTime = e.target.checked;
+    localStorage.setItem("swiss_trip_use_custom", String(state.useCustomTime));
+    inputsContainer.hidden = !state.useCustomTime;
+    render();
+  });
+
+  dateTimeInput.addEventListener("input", (e) => {
+    state.customTimeValue = e.target.value;
+    localStorage.setItem("swiss_trip_custom_value", state.customTimeValue);
+    render();
+  });
+
+  if (timezoneSelect) {
+    timezoneSelect.addEventListener("input", (e) => {
+      state.customTimezoneValue = e.target.value;
+      localStorage.setItem("swiss_trip_custom_timezone", state.customTimezoneValue);
+      render();
+    });
+  }
+}
+
 window.addEventListener("online", updateNetworkStatus);
 window.addEventListener("offline", updateNetworkStatus);
 
 updateNetworkStatus();
 registerServiceWorker();
+initTimeSimulationListeners();
+
+setInterval(() => {
+  if (!state.useCustomTime) {
+    render();
+  }
+}, 10000);
+
 loadData().catch(() => {
   $("#itinerary").innerHTML = `<div class="empty">行程資料載入失敗。第一次離線測試前，請先在有網路時開啟一次。</div>`;
 });

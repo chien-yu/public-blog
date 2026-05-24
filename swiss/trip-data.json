@@ -6,8 +6,6 @@
       "label": "爸 James",
       "groupId": "parents",
       "groupLabel": "爸媽",
-      "heroTitle": "James：荷蘭、英國、瑞士、維也納",
-      "summary": "爸媽 5/26 從台北出發，先到荷蘭和英國，6/4 到蘇黎世和 Yu、Cho 會合，瑞士後再去維也納。",
       "timelineTitle": "James 的行程"
     },
     {
@@ -15,8 +13,6 @@
       "label": "媽 Jane",
       "groupId": "parents",
       "groupLabel": "爸媽",
-      "heroTitle": "Jane：荷蘭、英國、瑞士、維也納",
-      "summary": "目前 Jane 和 James 使用同一份爸媽行程：荷蘭、英國、瑞士共同段，最後維也納回台北。",
       "timelineTitle": "Jane 的行程"
     },
     {
@@ -24,8 +20,6 @@
       "label": "Yu",
       "groupId": "yu",
       "groupLabel": "Yu",
-      "heroTitle": "Yu：瑞士會合，6/15 前往慕尼黑",
-      "summary": "Yu 6/4 抵達蘇黎世加入瑞士共同段，6/15 下午搭車往慕尼黑，6/16 從 MUC 飛 SEA。",
       "timelineTitle": "Yu 的行程"
     },
     {
@@ -33,8 +27,6 @@
       "label": "Cho",
       "groupId": "cho",
       "groupLabel": "Cho",
-      "heroTitle": "Cho：瑞士會合，6/17 從蘇黎世離開",
-      "summary": "Cho 6/4 抵達蘇黎世加入瑞士共同段，6/15-6/16 留在蘇黎世，6/17 從 ZRH 飛 YVR。",
       "timelineTitle": "Cho 的行程"
     }
   ],
