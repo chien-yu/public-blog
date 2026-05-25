@@ -45,10 +45,10 @@
       "name": "特拉法加廣場俱樂部住宅飯店",
       "nameEn": "Club Quarters Hotel Trafalgar Square",
       "address": "8 Northumberland Ave, London WC2N 5BY",
-      "booking": "hotels.com 訂單 73385157726206",
+      "booking": "[hotels.com 訂單 73385157726206 chan.yimao@gmail.com](https://tw.hotels.com/trips/booking-search?view=SEARCH_BY_ITINERARY_NUMBER_AND_EMAIL)",
       "checkInTime": "15:00",
       "checkOutTime": "12:00",
-      "stayNote": "https://tw.hotels.com/trips/booking-search?view=SEARCH_BY_ITINERARY_NUMBER_AND_EMAIL",
+      "stayNote": "",
       "mapUrl": "https://maps.app.goo.gl/yG5KGtdRj8x4K1RdA"
     },
     "hyatt-regency-jj": {
@@ -123,19 +123,21 @@
       "stayNote": "Jane、James 6/15 入住，6/17 早上退房；實際時間待確認。",
       "mapUrl": ""
     },
-    "munich-tbd": {
-      "name": "慕尼黑住宿待訂",
-      "nameEn": "Munich lodging TBD",
-      "address": "慕尼黑（Munich）",
-      "booking": "need to book",
-      "stayNote": "Yu 6/15 入住慕尼黑，住宿尚需預訂。",
-      "mapUrl": ""
+    "excelsior-by-geisel-munich": {
+      "name": "Excelsior by Geisel",
+      "nameEn": "Excelsior by Geisel",
+      "address": "Schützenstraße 11, 80335 München",
+      "booking": "Chase Travel 訂單 1018032447 (Confirmation: 202-8984803)",
+      "checkInTime": "15:00",
+      "checkOutTime": "12:00",
+      "stayNote": "Yu 6/15 入住慕尼黑，鄰近慕尼黑中央車站。",
+      "mapUrl": "https://www.google.com/maps/search/?api=1&query=Hotel+Excelsior+by+Geisel+Munich"
     },
     "novotel-wien": {
       "name": "諾富特韋恩中央車站飯店",
       "nameEn": "Novotel Wien Hauptbahnhof",
       "address": "維也納（Wien / Vienna）",
-      "booking": "hotels.com 訂單 73385187064243",
+      "booking": "[hotels.com 訂單 73385187064243 chan.yimao@gmail.com](https://tw.hotels.com/trips/booking-search?view=SEARCH_BY_ITINERARY_NUMBER_AND_EMAIL)",
       "checkInTime": "15:00",
       "checkOutTime": "12:00",
       "stayNote": "Jane、James 6/17 入住，6/19 12:00 退房。",
@@ -786,7 +788,7 @@
       ],
       "lodging": {
         "parents": "park-hyatt-zurich",
-        "yu": "munich-tbd",
+        "yu": "excelsior-by-geisel-munich",
         "cho": "crowne-plaza-cho-0614"
       },
       "lodgingBadges": {
