@@ -34,37 +34,37 @@
     "holiday-inn-express-amsterdam-sloterdijk": {
       "name": "斯洛特戴克站假日飯店",
       "nameEn": "Holiday Inn Express Amsterdam - Sloterdijk Station by IHG",
-      "address": "阿姆斯特丹 Sloterdijk Station 附近",
-      "booking": "IHG / hotels.com 訂單 73371320283253",
+      "address": "Zaventemweg 3 Amsterdam 1043EH",
+      "booking": "IHG 官方訂單 84438087",
       "checkInTime": "15:00",
       "checkOutTime": "12:00",
-      "stayNote": "靠近 Sloterdijk Station。",
+      "stayNote": "靠近 Sloterdijk Station。Front desk: 31 20 8201520",
       "mapUrl": "https://maps.app.goo.gl/iuC4z9JwpSHAUxNx5"
     },
     "club-quarters-trafalgar": {
       "name": "特拉法加廣場俱樂部住宅飯店",
       "nameEn": "Club Quarters Hotel Trafalgar Square",
-      "address": "倫敦（London）",
+      "address": "8 Northumberland Ave, London WC2N 5BY",
       "booking": "hotels.com 訂單 73385157726206",
       "checkInTime": "15:00",
       "checkOutTime": "12:00",
-      "stayNote": "倫敦連住，6/4 12:00 退房。",
-      "mapUrl": ""
+      "stayNote": "https://tw.hotels.com/trips/booking-search?view=SEARCH_BY_ITINERARY_NUMBER_AND_EMAIL",
+      "mapUrl": "https://maps.app.goo.gl/yG5KGtdRj8x4K1RdA"
     },
     "hyatt-regency-jj": {
       "name": "Hyatt Regency",
       "nameEn": "Hyatt Regency Zurich",
       "address": "蘇黎世（Zurich）",
-      "booking": "Jane、James 訂房 967483542",
-      "stayNote": "Jane、James 6/4 入住，實際入住/退房時間待確認。",
+      "booking": "Citi Booking ID 967483542 Reference ID 151240RA020693",
+      "stayNote": "Jane、James 6/4 入住，6/5 退房。",
       "mapUrl": ""
     },
     "hyatt-regency-yc": {
       "name": "Hyatt Regency",
       "nameEn": "Hyatt Regency Zurich",
       "address": "蘇黎世（Zurich）",
-      "booking": "Yu、Cho 訂房 6594331",
-      "stayNote": "Yu、Cho 6/4 入住，實際入住/退房時間待確認。",
+      "booking": "Booking ID 6594331 via Cube credit card",
+      "stayNote": "Yu、Cho 6/4 入住，6/5 退房。",
       "mapUrl": ""
     },
     "hyatt-or-small-town": {
@@ -147,21 +147,18 @@
       "id": "2026-05-26",
       "date": "2026/5/26",
       "weekday": "二",
+      "timezone": "Asia/Taipei",
       "participants": [
         "parents"
       ],
       "title": "台北出發，經新加坡前往阿姆斯特丹",
-      "location": "台北（Taipei）／新加坡（Singapore）／阿姆斯特丹（AMS）",
-      "summary": "爸媽搭新加坡航空前往阿姆斯特丹。",
       "movements": [
         {
           "audience": [
             "parents"
           ],
           "time": "14:20",
-          "title": "新加坡航空 SQ877：台北到新加坡",
-          "summary": "台北 14:20 -> 新加坡 18:55",
-          "detail": "新加坡航空 SQ877，台北到新加坡。",
+          "title": "台北 ➔ 新加坡",
           "detailItems": [
             {
               "label": "航班",
@@ -186,9 +183,7 @@
             "parents"
           ],
           "time": "23:55",
-          "title": "新加坡航空 SQ324：新加坡到阿姆斯特丹",
-          "summary": "新加坡 23:55 -> AMS 2026/5/27 07:15",
-          "detail": "新加坡航空 SQ324，新加坡到阿姆斯特丹。",
+          "title": "新加坡 ➔ 阿姆斯特丹",
           "detailItems": [
             {
               "label": "航班",
@@ -200,7 +195,7 @@
             },
             {
               "label": "抵達",
-              "value": "2026/5/27 07:15 阿姆斯特丹（AMS）"
+              "value": "07:15 阿姆斯特丹（AMS）"
             },
             {
               "label": "訂位代號",
@@ -222,16 +217,28 @@
         "parents"
       ],
       "title": "抵達阿姆斯特丹",
-      "location": "阿姆斯特丹（AMS）",
-      "summary": "07:15 抵達 AMS，晚上住 Holiday Inn Express Amsterdam - Sloterdijk Station by IHG。",
       "movements": [
         {
           "audience": [
             "parents"
           ],
+          "time": "00:00",
+          "title": "飛機上",
+          "detail": "搭乘新加坡航空 SQ324，航行中。"
+        },
+        {
+          "audience": [
+            "parents"
+          ],
           "time": "07:15",
-          "title": "抵達 AMS",
-          "detail": "到 AMS 後進入荷蘭行程。"
+          "title": "抵達 AMS：入關、取行李",
+          "detail": "抵達後辦理入境手續、提取行李，準備搭火車前往旅館。",
+          "detailItems": [
+            {
+              "label": "交通",
+              "value": "搭乘 NS Train 從 Schiphol Airport 站到 Amsterdam Sloterdijk 站 (約 10 分鐘)"
+            }
+          ]
         }
       ],
       "lodging": {
@@ -246,16 +253,14 @@
         "parents"
       ],
       "title": "阿姆斯特丹前往羊角村",
-      "location": "羊角村（Giethoorn）",
-      "summary": "從 AMS 前往羊角村遊玩，晚上回阿姆斯特丹同一間飯店。",
       "movements": [
         {
           "audience": [
             "parents"
           ],
           "time": "待確認",
-          "title": "AMS 到羊角村遊玩",
-          "detail": "羊角村是當天遊玩目標地點；晚上回阿姆斯特丹住宿。"
+          "title": "阿姆斯特丹 ➔ 羊角村",
+          "detail": "羊角村是當天遊玩目標地點；晚上返回阿姆斯特丹住宿。"
         }
       ],
       "lodging": {
@@ -270,15 +275,13 @@
         "parents"
       ],
       "title": "羊角村返回阿姆斯特丹",
-      "location": "阿姆斯特丹（AMS）",
-      "summary": "阿姆斯特丹住宿第三晚。",
       "movements": [
         {
           "audience": [
             "parents"
           ],
           "time": "待確認",
-          "title": "羊角村到 AMS",
+          "title": "羊角村 ➔ 阿姆斯特丹",
           "detail": "交通方式待補。"
         }
       ],
@@ -290,20 +293,26 @@
       "id": "2026-05-30",
       "date": "2026/5/30",
       "weekday": "六",
+      "timezone": "Europe/London",
       "participants": [
         "parents"
       ],
       "title": "阿姆斯特丹前往倫敦",
-      "location": "倫敦（London）",
-      "summary": "爸媽從 AMS 到倫敦，入住特拉法加廣場俱樂部住宅飯店。",
       "movements": [
         {
           "audience": [
             "parents"
           ],
+          "time": "11:00",
+          "title": "前往阿姆斯特丹總站搭歐洲之星",
+          "detail": ""
+        },
+        {
+          "audience": [
+            "parents"
+          ],
           "time": "12:40",
-          "title": "Eurostar 9143：阿姆斯特丹到倫敦",
-          "summary": "Amsterdam Centraal 12:40 -> London St Pancras Int'l 15:57",
+          "title": "阿姆斯特丹 ➔ 倫敦",
           "detail": "這段要抓得比較早到站：票券建議 11:25 抵達 Amsterdam Centraal 的 Eurostar UK Terminal，先過安檢和英國邊境檢查。",
           "detailItems": [
             {
@@ -361,12 +370,11 @@
       "id": "2026-05-31",
       "date": "2026/5/31",
       "weekday": "日",
+      "timezone": "Europe/London",
       "participants": [
         "parents"
       ],
-      "title": "倫敦",
-      "location": "倫敦（London）",
-      "summary": "倫敦停留。",
+      "title": "倫敦停留",
       "lodging": {
         "parents": "club-quarters-trafalgar"
       }
@@ -375,12 +383,11 @@
       "id": "2026-06-01",
       "date": "2026/6/01",
       "weekday": "一",
+      "timezone": "Europe/London",
       "participants": [
         "parents"
       ],
-      "title": "倫敦",
-      "location": "倫敦（London）",
-      "summary": "倫敦停留。",
+      "title": "倫敦停留",
       "lodging": {
         "parents": "club-quarters-trafalgar"
       }
@@ -389,12 +396,11 @@
       "id": "2026-06-02",
       "date": "2026/6/02",
       "weekday": "二",
+      "timezone": "Europe/London",
       "participants": [
         "parents"
       ],
-      "title": "倫敦",
-      "location": "倫敦（London）",
-      "summary": "倫敦停留。",
+      "title": "倫敦停留",
       "lodging": {
         "parents": "club-quarters-trafalgar"
       }
@@ -403,12 +409,11 @@
       "id": "2026-06-03",
       "date": "2026/6/03",
       "weekday": "三",
+      "timezone": "Europe/London",
       "participants": [
         "parents"
       ],
-      "title": "倫敦",
-      "location": "倫敦（London）",
-      "summary": "倫敦最後一晚，隔天 12:00 check out。",
+      "title": "倫敦停留（最後一晚）",
       "lodging": {
         "parents": "club-quarters-trafalgar"
       },
@@ -425,32 +430,28 @@
         "all"
       ],
       "title": "全家在蘇黎世會合",
-      "location": "蘇黎世（Zurich）",
-      "summary": "Yu、Cho、爸媽分別抵達蘇黎世，開始瑞士共同段。",
       "movements": [
         {
           "audience": [
             "yu"
           ],
           "time": "08:15",
-          "title": "Yu 抵達蘇黎世",
-          "detail": "Yu 08:15 抵達。"
+          "title": "Yu 抵達蘇黎世"
         },
         {
           "audience": [
             "cho"
           ],
           "time": "11:30",
-          "title": "Cho 抵達蘇黎世",
-          "detail": "Cho 11:30 抵達。"
+          "title": "Cho 抵達蘇黎世"
         },
         {
           "audience": [
             "parents"
           ],
           "time": "14:50",
-          "title": "爸媽從倫敦到蘇黎世",
-          "detail": "Jane & James 14:50 倫敦到蘇黎世。SWISS 訂位代號 Y2KH8V。"
+          "title": "倫敦 ➔ 蘇黎世 (爸媽抵達)",
+          "detail": "Jane & James 14:50 抵達蘇黎世。SWISS 訂位代號 Y2KH8V。"
         }
       ],
       "lodging": {
@@ -468,20 +469,18 @@
         "all"
       ],
       "title": "蘇黎世或小鎮",
-      "location": "蘇黎世（Zurich）或小鎮",
-      "summary": "移動工具：Mercedes-Benz V Class or Similar。",
       "movements": [
         {
           "audience": [
             "all"
           ],
-          "time": "待確認",
-          "title": "Mercedes-Benz V Class or Similar",
-          "detail": "當天行程和住宿仍待確認。"
+          "time": "12:00 PM",
+          "title": "取車",
+          "detail": "Hertz L5543984396"
         }
       ],
       "lodging": {
-        "all": "hyatt-or-small-town"
+        "all": "Small town"
       }
     },
     {
@@ -493,15 +492,13 @@
         "all"
       ],
       "title": "蘇黎世前往策馬特",
-      "location": "策馬特（Zermatt）",
-      "summary": "從蘇黎世到策馬特，入住 Cervo。",
       "movements": [
         {
           "audience": [
             "all"
           ],
           "time": "待確認",
-          "title": "蘇黎世到策馬特",
+          "title": "蘇黎世 ➔ 策馬特",
           "detail": "Zurich -> Zermatt。"
         }
       ],
@@ -517,9 +514,7 @@
       "participants": [
         "all"
       ],
-      "title": "策馬特",
-      "location": "策馬特（Zermatt）",
-      "summary": "策馬特停留。",
+      "title": "策馬特停留",
       "lodging": {
         "all": "cervo-zermatt"
       }
@@ -532,9 +527,7 @@
       "participants": [
         "all"
       ],
-      "title": "策馬特",
-      "location": "策馬特（Zermatt）",
-      "summary": "策馬特停留。",
+      "title": "策馬特停留",
       "lodging": {
         "all": "cervo-zermatt"
       }
@@ -548,15 +541,13 @@
         "all"
       ],
       "title": "策馬特前往格林德瓦／因特拉肯",
-      "location": "因特拉肯（Interlaken）",
-      "summary": "從策馬特前往格林德瓦，再到因特拉肯住宿。",
       "movements": [
         {
           "audience": [
             "all"
           ],
           "time": "待確認",
-          "title": "策馬特到格林德瓦",
+          "title": "策馬特 ➔ 格林德瓦",
           "detail": "Zermatt -> Grindelwald。"
         }
       ],
@@ -572,9 +563,7 @@
       "participants": [
         "all"
       ],
-      "title": "因特拉肯",
-      "location": "因特拉肯（Interlaken）",
-      "summary": "因特拉肯停留。",
+      "title": "因特拉肯停留",
       "lodging": {
         "all": "apartment-carina"
       }
@@ -587,9 +576,7 @@
       "participants": [
         "all"
       ],
-      "title": "因特拉肯",
-      "location": "因特拉肯（Interlaken）",
-      "summary": "因特拉肯停留。",
+      "title": "因特拉肯停留",
       "lodging": {
         "all": "apartment-carina"
       }
@@ -603,15 +590,13 @@
         "all"
       ],
       "title": "格林德瓦前往因特拉肯",
-      "location": "因特拉肯（Interlaken）",
-      "summary": "從格林德瓦到因特拉肯。",
       "movements": [
         {
           "audience": [
             "all"
           ],
           "time": "待確認",
-          "title": "格林德瓦到因特拉肯",
+          "title": "格林德瓦 ➔ 因特拉肯",
           "detail": "Grindelwald -> Interlaken。"
         }
       ],
@@ -627,9 +612,7 @@
       "participants": [
         "all"
       ],
-      "title": "因特拉肯",
-      "location": "因特拉肯（Interlaken）",
-      "summary": "因特拉肯停留。",
+      "title": "因特拉肯停留",
       "lodging": {
         "all": "apartment-carina"
       }
@@ -643,15 +626,13 @@
         "all"
       ],
       "title": "因特拉肯經琉森到蘇黎世",
-      "location": "蘇黎世（Zurich）",
-      "summary": "從因特拉肯經琉森到蘇黎世。",
       "movements": [
         {
           "audience": [
             "all"
           ],
           "time": "待確認",
-          "title": "因特拉肯經琉森到蘇黎世",
+          "title": "因特拉肯 ➔ 琉森 ➔ 蘇黎世",
           "detail": "Interlaken -> Luzern -> Zurich。"
         }
       ],
@@ -670,24 +651,20 @@
         "all"
       ],
       "title": "蘇黎世，Yu 前往慕尼黑",
-      "location": "蘇黎世（Zurich）／慕尼黑（Munich）",
-      "summary": "爸媽移動到 Park Hyatt；Yu 下午搭車往慕尼黑；Cho 留在蘇黎世。",
       "movements": [
         {
           "audience": [
             "parents"
           ],
           "time": "待確認",
-          "title": "爸媽移動到 Park Hyatt",
-          "detail": "Jane、James move to Hyatt。"
+          "title": "爸媽換旅館 (Park Hyatt)"
         },
         {
           "audience": [
             "yu"
           ],
           "time": "下午",
-          "title": "Yu 搭車往慕尼黑",
-          "detail": "Chien-Yu 下午搭車往慕尼黑。"
+          "title": "蘇黎世 ➔ 慕尼黑"
         }
       ],
       "lodging": {
@@ -707,16 +684,27 @@
         "cho"
       ],
       "title": "Yu 從慕尼黑離開，爸媽和 Cho 在蘇黎世",
-      "location": "蘇黎世（Zurich）／慕尼黑（MUC）",
-      "summary": "Yu 15:35 MUC -> SEA；Cho 和爸媽在蘇黎世。",
       "movements": [
         {
           "audience": [
             "yu"
           ],
           "time": "15:35",
-          "title": "Yu MUC -> SEA",
-          "detail": "Chien-Yu 15:35 從慕尼黑飛西雅圖。"
+          "title": "慕尼黑 ➔ 西雅圖",
+          "detailItems": [
+            {
+              "label": "航班",
+              "value": "DE2026 (Condor)"
+            },
+            {
+              "label": "出發",
+              "value": "15:35 慕尼黑 (MUC)"
+            },
+            {
+              "label": "抵達",
+              "value": "17:40 西雅圖 (SEA)"
+            }
+          ]
         }
       ],
       "lodging": {
@@ -734,24 +722,48 @@
         "cho"
       ],
       "title": "Cho 離開瑞士，爸媽前往維也納",
-      "location": "蘇黎世（Zurich）／維也納（Wien / Vienna）",
-      "summary": "Cho 13:25 ZRH -> YVR；Jane、James 10:32 RJX13479 前往維也納。",
       "movements": [
         {
           "audience": [
             "parents"
           ],
           "time": "10:32",
-          "title": "爸媽搭 RJX13479 前往維也納",
-          "detail": "Jane、James 10:32 RJX13479 -> 維也納。"
+          "title": "蘇黎世 ➔ 維也納",
+          "detailItems": [
+            {
+              "label": "車次",
+              "value": "RJX13479"
+            },
+            {
+              "label": "出發",
+              "value": "10:32 Zurich HB"
+            },
+            {
+              "label": "抵達",
+              "value": "18:12 Wien Hbf"
+            }
+          ]
         },
         {
           "audience": [
             "cho"
           ],
           "time": "13:25",
-          "title": "Cho ZRH -> YVR",
-          "detail": "Cho 13:25 從蘇黎世飛溫哥華。"
+          "title": "蘇黎世 ➔ 溫哥華",
+          "detailItems": [
+            {
+              "label": "航班",
+              "value": "AC803 (Air Canada)"
+            },
+            {
+              "label": "出發",
+              "value": "13:25 蘇黎世 (ZRH)"
+            },
+            {
+              "label": "抵達",
+              "value": "15:30 溫哥華 (YVR)"
+            }
+          ]
         }
       ],
       "lodging": {
@@ -765,9 +777,7 @@
       "participants": [
         "parents"
       ],
-      "title": "維也納",
-      "location": "維也納（Wien / Vienna）",
-      "summary": "爸媽在維也納。",
+      "title": "維也納停留",
       "lodging": {
         "parents": "novotel-wien"
       }
@@ -780,16 +790,27 @@
         "parents"
       ],
       "title": "維也納出發回台北",
-      "location": "維也納（Wien / Vienna）",
-      "summary": "12:00 check out；Jane & Yi-Mao 長榮航空 BR062，維也納 17:45 出發。",
       "movements": [
         {
           "audience": [
             "parents"
           ],
           "time": "17:45",
-          "title": "長榮航空 BR062",
-          "detail": "維也納 17:45 出發。"
+          "title": "維也納 ➔ 台北",
+          "detailItems": [
+            {
+              "label": "航班",
+              "value": "EVA Air BR062"
+            },
+            {
+              "label": "出發",
+              "value": "17:45 維也納 (VIE)"
+            },
+            {
+              "label": "抵達",
+              "value": "16:05 (+1) 台北 (TPE)"
+            }
+          ]
         }
       ],
       "notes": [
@@ -804,16 +825,13 @@
         "parents"
       ],
       "title": "抵達台北",
-      "location": "台北（Taipei）",
-      "summary": "長榮航空 BR062 抵達台北 16:05。",
       "movements": [
         {
           "audience": [
             "parents"
           ],
           "time": "16:05",
-          "title": "抵達台北",
-          "detail": "長榮航空 BR062 抵達台北。"
+          "title": "抵達台北"
         }
       ]
     }
@@ -822,7 +840,7 @@
     {
       "type": "資料結構",
       "title": "住宿改成獨立資料表",
-      "detail": "每天只引用住宿 id；住宿名稱、訂房、地址、Google Map 都集中在 lodgings 裡。之後任何旅行都可以套用。"
+      "detail": "每天只引用住宿 id；住宿名稱、訂房、地址、Google Map 都集中在 lodgings 裡。之後 any 旅行都可以套用。"
     },
     {
       "type": "離線使用（Offline）",

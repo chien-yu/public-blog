@@ -8,16 +8,19 @@ const state = {
 
 // Dynamic timezone and absolute timestamp helper logic
 function getDayTimezone(day) {
-  if (!day || !day.location) return "Europe/Zurich";
-  const loc = day.location.toLowerCase();
-  if (loc.includes("台北") || loc.includes("taipei")) {
-    return "Asia/Taipei";
-  }
-  if (loc.includes("新加坡") || loc.includes("singapore")) {
-    return "Asia/Singapore";
-  }
-  if (loc.includes("倫敦") || loc.includes("london")) {
-    return "Europe/London";
+  if (!day) return "Europe/Zurich";
+  if (day.timezone) return day.timezone;
+  if (day.location) {
+    const loc = day.location.toLowerCase();
+    if (loc.includes("台北") || loc.includes("taipei")) {
+      return "Asia/Taipei";
+    }
+    if (loc.includes("新加坡") || loc.includes("singapore")) {
+      return "Asia/Singapore";
+    }
+    if (loc.includes("倫敦") || loc.includes("london")) {
+      return "Europe/London";
+    }
   }
   return "Europe/Zurich";
 }
@@ -303,7 +306,6 @@ function renderDay(day, role, roleDays) {
       <div class="calendar-day-body">
         ${day.dayLabel ? `<p class="event-kicker">${day.dayLabel}</p>` : ""}
         <h3>${day.title}</h3>
-        <p>${day.location || ""}</p>
         ${movements.length ? `
           <ul class="calendar-movements">
             ${movements.slice(0, 2).map((movement, movementIndex) => renderMovement(movement, `calendar-movement-${day.id}-${movementIndex}`)).join("")}
