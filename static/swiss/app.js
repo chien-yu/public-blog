@@ -12,16 +12,19 @@ const state = {
 
 // Dynamic timezone and absolute timestamp helper logic
 function getDayTimezone(day) {
-  if (!day || !day.location) return "Europe/Zurich";
-  const loc = day.location.toLowerCase();
-  if (loc.includes("台北") || loc.includes("taipei")) {
-    return "Asia/Taipei";
-  }
-  if (loc.includes("新加坡") || loc.includes("singapore")) {
-    return "Asia/Singapore";
-  }
-  if (loc.includes("倫敦") || loc.includes("london")) {
-    return "Europe/London";
+  if (!day) return "Europe/Zurich";
+  if (day.timezone) return day.timezone;
+  if (day.location) {
+    const loc = day.location.toLowerCase();
+    if (loc.includes("台北") || loc.includes("taipei")) {
+      return "Asia/Taipei";
+    }
+    if (loc.includes("新加坡") || loc.includes("singapore")) {
+      return "Asia/Singapore";
+    }
+    if (loc.includes("倫敦") || loc.includes("london")) {
+      return "Europe/London";
+    }
   }
   return "Europe/Zurich";
 }
@@ -176,8 +179,6 @@ function daySearchText(day, role) {
     day.date,
     day.weekday,
     day.dayLabel,
-    day.location,
-    day.summary,
     ...(day.notes || []),
     ...getMovements(day, role).flatMap((movement) => [
       movement.time,
@@ -344,7 +345,13 @@ function renderLodging(lodging, stayContext, overnight, index) {
 }
 
 function renderDay(day, role, days, index) {
-  const movementsWithIdx = getMovementsWithIndex(day, role);
+  let movementsWithIdx = getMovementsWithIndex(day, role);
+  if (!state.query) {
+    movementsWithIdx = movementsWithIdx.filter(({ originalIndex }) => {
+      const id = `movement-${day.id}-${originalIndex}`;
+      return !state.expiredMovementIds.has(id);
+    });
+  }
   const lodging = getLodging(day, role);
   const overnight = getOvernight(day, role);
   const stayContext = getStayContext(days, index, role);
@@ -357,9 +364,7 @@ function renderDay(day, role, days, index) {
         ${day.dayLabel ? `<em>${day.dayLabel}</em>` : ""}
       </div>
       <div class="event-body">
-        <p class="event-kicker">${day.location || "地點待確認"}</p>
         <h3>${day.title}</h3>
-        <p>${day.summary || ""}</p>
         ${movementsWithIdx.length ? `<ul class="movement-list">${movementsWithIdx.map(({ movement, originalIndex }) => renderMovement(movement, `movement-${day.id}-${originalIndex}`)).join("")}</ul>` : ""}
         ${renderLodging(lodging, stayContext, overnight, day.id)}
         ${(day.notes || []).length ? `
@@ -411,16 +416,27 @@ function render() {
 
   allMovements.sort((a, b) => a.timestamp - b.timestamp);
 
-  let nowMovementId = null;
+  // Get active date formatted
+  const activeDateStr = new Intl.DateTimeFormat("en-US", { timeZone: activeTz, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(activeTimestamp));
+  const [am, ad, ay] = activeDateStr.split("/");
+  const activeDateFormatted = `${ay}-${am}-${ad}`;
+
+  // Find expired movements
+  const expiredMovementIds = new Set();
   const pastOrEqualMovements = allMovements.filter(m => m.timestamp <= activeTimestamp);
   if (pastOrEqualMovements.length > 0) {
+    const latestPastTimestamp = pastOrEqualMovements[pastOrEqualMovements.length - 1].timestamp;
+    allMovements.forEach(m => {
+      if (m.timestamp < latestPastTimestamp) {
+        expiredMovementIds.add(m.id);
+      }
+    });
+  }
+  state.expiredMovementIds = expiredMovementIds;
+
+  let nowMovementId = null;
+  if (pastOrEqualMovements.length > 0) {
     const candidateNow = pastOrEqualMovements[pastOrEqualMovements.length - 1];
-    
-    // Check if candidateNow's date matches the active date in the active timezone
-    const activeDateStr = new Intl.DateTimeFormat("en-US", { timeZone: activeTz, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(activeTimestamp));
-    const [am, ad, ay] = activeDateStr.split("/");
-    const activeDateFormatted = `${ay}-${am}-${ad}`;
-    
     if (candidateNow.dayId === activeDateFormatted) {
       nowMovementId = candidateNow.id;
     }
@@ -446,8 +462,16 @@ function render() {
 
   renderRoles();
 
-  $("#itinerary").innerHTML = days.length
-    ? days.map((day, idx) => renderDay(day, role, days, idx)).join("")
+  let activeDays = days;
+  if (!query) {
+    const hasUnexpiredDays = days.some(d => d.id >= activeDateFormatted);
+    if (hasUnexpiredDays) {
+      activeDays = days.filter(d => d.id >= activeDateFormatted);
+    }
+  }
+
+  $("#itinerary").innerHTML = activeDays.length
+    ? activeDays.map((day) => renderDay(day, role, days, days.indexOf(day))).join("")
     : `<div class="empty">找不到符合「${state.query}」的行程。</div>`;
 
   $("#essentials").innerHTML = state.data.essentials.map((item) => `
