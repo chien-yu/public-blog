@@ -1,9 +1,15 @@
+const isLocal = window.location.hostname === 'localhost' || 
+                window.location.hostname === '127.0.0.1' || 
+                window.location.hostname.startsWith('192.168.') || 
+                window.location.hostname.startsWith('10.') || 
+                window.location.hostname.endsWith('.local');
+
 const state = {
   data: null,
   selectedRole: localStorage.getItem("swiss_trip_role") || "dad",
   query: "",
   // Time simulation states
-  useCustomTime: localStorage.getItem("swiss_trip_use_custom") === "true",
+  useCustomTime: isLocal && localStorage.getItem("swiss_trip_use_custom") === "true",
   customTimeValue: localStorage.getItem("swiss_trip_custom_value") || "2026-06-04T12:00",
   customTimezoneValue: localStorage.getItem("swiss_trip_custom_timezone") || "Europe/Zurich",
   nowMovementId: null,
@@ -31,8 +37,18 @@ function getDayTimezone(day) {
 
 function linkify(text) {
   if (!text) return "";
+  const mdRegex = /\[([^\]]+)\]\((https?:\/\/[^\s\)]+)\)/g;
+  let temp = text.replace(mdRegex, (match, label, url) => {
+    return `__MDLINK_START__${btoa(url)}__MDLINK_MIDDLE__${label}__MDLINK_END__`;
+  });
   const urlRegex = /(https?:\/\/[^\s]+)/g;
-  return text.replace(urlRegex, (url) => `<a href="${url}" target="_blank" rel="noopener">${url}</a>`);
+  temp = temp.replace(urlRegex, (url) => {
+    return `<a href="${url}" target="_blank" rel="noopener">${url}</a>`;
+  });
+  const mdDecodeRegex = /__MDLINK_START__([A-Za-z0-9\+\/=]+)__MDLINK_MIDDLE__(.*?)__MDLINK_END__/g;
+  return temp.replace(mdDecodeRegex, (match, encodedUrl, label) => {
+    return `<a href="${atob(encodedUrl)}" target="_blank" rel="noopener">${label}</a>`;
+  });
 }
 
 function isValidTimezone(tz) {
@@ -561,7 +577,13 @@ window.addEventListener("offline", updateNetworkStatus);
 
 updateNetworkStatus();
 registerServiceWorker();
-initTimeSimulationListeners();
+
+if (!isLocal) {
+  const timeControl = $(".topbar-time-control");
+  if (timeControl) timeControl.style.display = "none";
+} else {
+  initTimeSimulationListeners();
+}
 
 setInterval(() => {
   if (!state.useCustomTime) {
