@@ -25,6 +25,12 @@ function getDayTimezone(day) {
   return "Europe/Zurich";
 }
 
+function linkify(text) {
+  if (!text) return "";
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  return text.replace(urlRegex, (url) => `<a href="${url}" target="_blank" rel="noopener">${url}</a>`);
+}
+
 function isValidTimezone(tz) {
   try {
     if (!tz) return false;
@@ -142,19 +148,7 @@ function getMovements(day, role) {
   });
 }
 
-function getStayContext(days, dayIndex, role) {
-  const lodgingId = getLodgingId(days[dayIndex], role);
-  if (!lodgingId) return null;
 
-  const previousId = dayIndex > 0 ? getLodgingId(days[dayIndex - 1], role) : null;
-  const nextId = dayIndex < days.length - 1 ? getLodgingId(days[dayIndex + 1], role) : null;
-
-  return {
-    lodgingId,
-    isFirstNight: lodgingId !== previousId,
-    isLastNight: lodgingId !== nextId,
-  };
-}
 
 function parseDate(day) {
   const [year, month, date] = day.id.split("-").map(Number);
@@ -185,24 +179,15 @@ function renderRoles() {
   `).join("");
 }
 
-function renderStayBadges(lodging, stayContext) {
-  if (!stayContext) return "";
-
-  const badges = [];
-  if (stayContext.isFirstNight) {
-    badges.push(`入住${lodging.checkInTime ? ` ${lodging.checkInTime}` : ""}`);
-  } else {
-    badges.push("續住");
-  }
-
-  if (stayContext.isLastNight) {
-    badges.push(`明早退房${lodging.checkOutTime ? ` ${lodging.checkOutTime}` : ""}`);
-  }
-
+function renderStayBadges(day, role) {
+  const badges = getRoleValue(day.lodgingBadges, role) || [];
+  if (!badges.length) return "";
   return `<div class="stay-badges compact">${badges.map((badge) => `<span>${badge}</span>`).join("")}</div>`;
 }
 
-function renderLodging(lodging, stayContext, overnight, id) {
+function renderLodging(day, role, id) {
+  const lodging = getLodging(day, role);
+  const overnight = getOvernight(day, role);
   if (!lodging) return `<div class="calendar-lodging muted">${overnight || "住宿待確認"}</div>`;
   const mapLink = lodging.mapUrl
     ? `<a href="${lodging.mapUrl}" target="_blank" rel="noopener">Google Map</a>`
@@ -213,18 +198,18 @@ function renderLodging(lodging, stayContext, overnight, id) {
       <button class="lodging-button compact" type="button" aria-expanded="false" aria-controls="${id}">
         <span>住宿</span>
         <strong>${lodging.name}</strong>
-        ${renderStayBadges(lodging, stayContext)}
+        ${renderStayBadges(day, role)}
         <em>查看住宿資訊</em>
       </button>
       <div class="lodging-detail" id="${id}" hidden>
         <dl>
           <div>
             <dt>英文 / 備註</dt>
-            <dd>${lodging.nameEn || "待補"}${lodging.stayNote ? `；${lodging.stayNote}` : ""}</dd>
+            <dd>${lodging.nameEn || "待補"}${lodging.stayNote ? `；${linkify(lodging.stayNote)}` : ""}</dd>
           </div>
           <div>
             <dt>訂房</dt>
-            <dd>${lodging.booking || "待補"}</dd>
+            <dd>${linkify(lodging.booking) || "待補"}</dd>
           </div>
           <div>
             <dt>地圖</dt>
@@ -257,7 +242,7 @@ function renderMovementDetail(movement, detailId) {
 
   return `
     <div class="movement-detail compact" id="${detailId}" hidden>
-      ${movement.detail ? `<p>${movement.detail}</p>` : ""}
+      ${movement.detail ? `<p>${linkify(movement.detail)}</p>` : ""}
       ${detailItems.length ? `
         <dl>
           ${detailItems.map((item) => `
@@ -291,9 +276,6 @@ function renderMovement(movement, detailId) {
 
 function renderDay(day, role, roleDays) {
   const date = parseDate(day);
-  const lodging = getLodging(day, role);
-  const overnight = getOvernight(day, role);
-  const stayContext = getStayContext(roleDays, roleDays.indexOf(day), role);
   const movements = getMovements(day, role);
   const lodgingDetailId = `calendar-lodging-${day.id}`;
 
@@ -311,7 +293,7 @@ function renderDay(day, role, roleDays) {
             ${movements.slice(0, 2).map((movement, movementIndex) => renderMovement(movement, `calendar-movement-${day.id}-${movementIndex}`)).join("")}
           </ul>
         ` : ""}
-        ${renderLodging(lodging, stayContext, overnight, lodgingDetailId)}
+        ${renderLodging(day, role, lodgingDetailId)}
       </div>
     </article>
   `;

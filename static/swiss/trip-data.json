@@ -243,6 +243,11 @@
       ],
       "lodging": {
         "parents": "holiday-inn-express-amsterdam-sloterdijk"
+      },
+      "lodgingBadges": {
+        "parents": [
+          "入住 15:00"
+        ]
       }
     },
     {
@@ -265,6 +270,11 @@
       ],
       "lodging": {
         "parents": "holiday-inn-express-amsterdam-sloterdijk"
+      },
+      "lodgingBadges": {
+        "parents": [
+          "續住"
+        ]
       }
     },
     {
@@ -287,6 +297,12 @@
       ],
       "lodging": {
         "parents": "holiday-inn-express-amsterdam-sloterdijk"
+      },
+      "lodgingBadges": {
+        "parents": [
+          "續住",
+          "明早退房 12:00"
+        ]
       }
     },
     {
@@ -364,6 +380,11 @@
       ],
       "lodging": {
         "parents": "club-quarters-trafalgar"
+      },
+      "lodgingBadges": {
+        "parents": [
+          "入住 15:00"
+        ]
       }
     },
     {
@@ -377,6 +398,11 @@
       "title": "倫敦停留",
       "lodging": {
         "parents": "club-quarters-trafalgar"
+      },
+      "lodgingBadges": {
+        "parents": [
+          "續住"
+        ]
       }
     },
     {
@@ -390,6 +416,11 @@
       "title": "倫敦停留",
       "lodging": {
         "parents": "club-quarters-trafalgar"
+      },
+      "lodgingBadges": {
+        "parents": [
+          "續住"
+        ]
       }
     },
     {
@@ -403,6 +434,11 @@
       "title": "倫敦停留",
       "lodging": {
         "parents": "club-quarters-trafalgar"
+      },
+      "lodgingBadges": {
+        "parents": [
+          "續住"
+        ]
       }
     },
     {
@@ -419,7 +455,13 @@
       },
       "notes": [
         "6/4 12:00 check out"
-      ]
+      ],
+      "lodgingBadges": {
+        "parents": [
+          "續住",
+          "明早退房 12:00"
+        ]
+      }
     },
     {
       "id": "2026-06-04",
@@ -458,6 +500,20 @@
         "parents": "hyatt-regency-jj",
         "yu": "hyatt-regency-yc",
         "cho": "hyatt-regency-yc"
+      },
+      "lodgingBadges": {
+        "parents": [
+          "入住",
+          "明早退房"
+        ],
+        "yu": [
+          "入住",
+          "明早退房"
+        ],
+        "cho": [
+          "入住",
+          "明早退房"
+        ]
       }
     },
     {
@@ -474,13 +530,19 @@
           "audience": [
             "all"
           ],
-          "time": "12:00 PM",
+          "time": "12:00",
           "title": "取車",
-          "detail": "Hertz L5543984396"
+          "detail": "Hertz 預約號 L5543984396。預約查詢網址：https://www.hertz.com/us/en/reservation/lookup"
         }
       ],
       "lodging": {
         "all": "Small town"
+      },
+      "lodgingBadges": {
+        "all": [
+          "入住",
+          "明早退房"
+        ]
       }
     },
     {
@@ -504,6 +566,11 @@
       ],
       "lodging": {
         "all": "cervo-zermatt"
+      },
+      "lodgingBadges": {
+        "all": [
+          "入住"
+        ]
       }
     },
     {
@@ -517,6 +584,11 @@
       "title": "策馬特停留",
       "lodging": {
         "all": "cervo-zermatt"
+      },
+      "lodgingBadges": {
+        "all": [
+          "續住"
+        ]
       }
     },
     {
@@ -530,6 +602,12 @@
       "title": "策馬特停留",
       "lodging": {
         "all": "cervo-zermatt"
+      },
+      "lodgingBadges": {
+        "all": [
+          "續住",
+          "明早退房"
+        ]
       }
     },
     {
@@ -553,6 +631,11 @@
       ],
       "lodging": {
         "all": "apartment-carina"
+      },
+      "lodgingBadges": {
+        "all": [
+          "入住"
+        ]
       }
     },
     {
@@ -566,6 +649,11 @@
       "title": "因特拉肯停留",
       "lodging": {
         "all": "apartment-carina"
+      },
+      "lodgingBadges": {
+        "all": [
+          "續住"
+        ]
       }
     },
     {
@@ -579,6 +667,11 @@
       "title": "因特拉肯停留",
       "lodging": {
         "all": "apartment-carina"
+      },
+      "lodgingBadges": {
+        "all": [
+          "續住"
+        ]
       }
     },
     {
@@ -602,6 +695,11 @@
       ],
       "lodging": {
         "all": "apartment-carina"
+      },
+      "lodgingBadges": {
+        "all": [
+          "續住"
+        ]
       }
     },
     {
@@ -615,6 +713,12 @@
       "title": "因特拉肯停留",
       "lodging": {
         "all": "apartment-carina"
+      },
+      "lodgingBadges": {
+        "all": [
+          "續住",
+          "明早退房"
+        ]
       }
     },
     {
@@ -640,6 +744,19 @@
         "parents": "crowne-plaza-jj-0614",
         "yu": "crowne-plaza-yu-0614",
         "cho": "crowne-plaza-cho-0614"
+      },
+      "lodgingBadges": {
+        "parents": [
+          "入住",
+          "明早退房"
+        ],
+        "yu": [
+          "入住",
+          "明早退房"
+        ],
+        "cho": [
+          "入住"
+        ]
       }
     },
     {
@@ -671,6 +788,18 @@
         "parents": "park-hyatt-zurich",
         "yu": "munich-tbd",
         "cho": "crowne-plaza-cho-0614"
+      },
+      "lodgingBadges": {
+        "parents": [
+          "入住"
+        ],
+        "yu": [
+          "入住",
+          "明早退房"
+        ],
+        "cho": [
+          "續住"
+        ]
       }
     },
     {
@@ -710,6 +839,16 @@
       "lodging": {
         "parents": "park-hyatt-zurich",
         "cho": "crowne-plaza-cho-0614"
+      },
+      "lodgingBadges": {
+        "parents": [
+          "續住",
+          "明早退房"
+        ],
+        "cho": [
+          "續住",
+          "明早退房"
+        ]
       }
     },
     {
@@ -768,6 +907,11 @@
       ],
       "lodging": {
         "parents": "novotel-wien"
+      },
+      "lodgingBadges": {
+        "parents": [
+          "入住 15:00"
+        ]
       }
     },
     {
@@ -780,6 +924,12 @@
       "title": "維也納停留",
       "lodging": {
         "parents": "novotel-wien"
+      },
+      "lodgingBadges": {
+        "parents": [
+          "續住",
+          "明早退房 12:00"
+        ]
       }
     },
     {

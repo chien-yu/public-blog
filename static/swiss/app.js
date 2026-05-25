@@ -29,6 +29,12 @@ function getDayTimezone(day) {
   return "Europe/Zurich";
 }
 
+function linkify(text) {
+  if (!text) return "";
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  return text.replace(urlRegex, (url) => `<a href="${url}" target="_blank" rel="noopener">${url}</a>`);
+}
+
 function isValidTimezone(tz) {
   try {
     if (!tz) return false;
@@ -159,19 +165,7 @@ function getMovementsWithIndex(day, role) {
     });
 }
 
-function getStayContext(days, dayIndex, role) {
-  const lodgingId = getLodgingId(days[dayIndex], role);
-  if (!lodgingId) return null;
 
-  const previousId = dayIndex > 0 ? getLodgingId(days[dayIndex - 1], role) : null;
-  const nextId = dayIndex < days.length - 1 ? getLodgingId(days[dayIndex + 1], role) : null;
-
-  return {
-    lodgingId,
-    isFirstNight: lodgingId !== previousId,
-    isLastNight: lodgingId !== nextId,
-  };
-}
 
 function daySearchText(day, role) {
   const lodging = getLodging(day, role);
@@ -221,7 +215,7 @@ function renderMovementDetails(movement, detailId, hiddenAttr = "hidden") {
 
   return `
     <div class="movement-detail" id="${detailId}" ${hiddenAttr}>
-      ${movement.detail ? `<p>${movement.detail}</p>` : ""}
+      ${movement.detail ? `<p>${linkify(movement.detail)}</p>` : ""}
       ${detailItems.length ? `
         <dl>
           ${detailItems.map((item) => `
@@ -286,24 +280,15 @@ function toggleDisclosure(button) {
   detail.hidden = expanded;
 }
 
-function renderStayBadges(lodging, stayContext) {
-  if (!stayContext) return "";
-
-  const badges = [];
-  if (stayContext.isFirstNight) {
-    badges.push(`入住${lodging.checkInTime ? ` ${lodging.checkInTime}` : ""}`);
-  } else {
-    badges.push("續住");
-  }
-
-  if (stayContext.isLastNight) {
-    badges.push(`明早退房${lodging.checkOutTime ? ` ${lodging.checkOutTime}` : ""}`);
-  }
-
+function renderStayBadges(day, role) {
+  const badges = getRoleValue(day.lodgingBadges, role) || [];
+  if (!badges.length) return "";
   return `<div class="stay-badges">${badges.map((badge) => `<span>${badge}</span>`).join("")}</div>`;
 }
 
-function renderLodging(lodging, stayContext, overnight, index) {
+function renderLodging(day, role, index) {
+  const lodging = getLodging(day, role);
+  const overnight = getOvernight(day, role);
   if (!lodging) {
     return `<div class="lodging-empty">${overnight || "住宿待確認"}</div>`;
   }
@@ -317,7 +302,7 @@ function renderLodging(lodging, stayContext, overnight, index) {
       <button class="lodging-button" type="button" aria-expanded="false" aria-controls="lodging-${index}">
         <span>今晚住宿</span>
         <strong>${lodging.name}${lodging.nameEn ? `（${lodging.nameEn}）` : ""}</strong>
-        ${renderStayBadges(lodging, stayContext)}
+        ${renderStayBadges(day, role)}
         <em>查看住宿資訊</em>
       </button>
       <div class="lodging-detail" id="lodging-${index}" hidden>
@@ -328,11 +313,11 @@ function renderLodging(lodging, stayContext, overnight, index) {
           </div>
           <div>
             <dt>訂房</dt>
-            <dd>${lodging.booking || "待補"}</dd>
+            <dd>${linkify(lodging.booking) || "待補"}</dd>
           </div>
           <div>
             <dt>住宿備註</dt>
-            <dd>${lodging.stayNote || "待補"}</dd>
+            <dd>${linkify(lodging.stayNote) || "待補"}</dd>
           </div>
           <div>
             <dt>地圖</dt>
@@ -352,9 +337,6 @@ function renderDay(day, role, days, index) {
       return !state.expiredMovementIds.has(id);
     });
   }
-  const lodging = getLodging(day, role);
-  const overnight = getOvernight(day, role);
-  const stayContext = getStayContext(days, index, role);
 
   return `
     <article>
@@ -366,7 +348,7 @@ function renderDay(day, role, days, index) {
       <div class="event-body">
         <h3>${day.title}</h3>
         ${movementsWithIdx.length ? `<ul class="movement-list">${movementsWithIdx.map(({ movement, originalIndex }) => renderMovement(movement, `movement-${day.id}-${originalIndex}`)).join("")}</ul>` : ""}
-        ${renderLodging(lodging, stayContext, overnight, day.id)}
+        ${renderLodging(day, role, day.id)}
         ${(day.notes || []).length ? `
           <div class="notes">
             ${day.notes.map((note) => `<p>${note}</p>`).join("")}
