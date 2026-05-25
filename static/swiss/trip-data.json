@@ -883,6 +883,13 @@
               "label": "抵達",
               "value": "18:12 Wien Hbf"
             }
+          ],
+          "documents": [
+            {
+              "label": "ÖBB 電子車票",
+              "type": "PDF",
+              "href": "/swiss/tickets/OEBBTicket.pdf"
+            }
           ]
         },
         {

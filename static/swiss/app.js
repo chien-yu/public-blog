@@ -1,9 +1,15 @@
+const isLocal = window.location.hostname === 'localhost' || 
+                window.location.hostname === '127.0.0.1' || 
+                window.location.hostname.startsWith('192.168.') || 
+                window.location.hostname.startsWith('10.') || 
+                window.location.hostname.endsWith('.local');
+
 const state = {
   data: null,
   selectedRole: localStorage.getItem("swiss_trip_role") || "dad",
   query: "",
   // Time simulation states
-  useCustomTime: localStorage.getItem("swiss_trip_use_custom") === "true",
+  useCustomTime: isLocal && localStorage.getItem("swiss_trip_use_custom") === "true",
   customTimeValue: localStorage.getItem("swiss_trip_custom_value") || "2026-06-04T12:00",
   customTimezoneValue: localStorage.getItem("swiss_trip_custom_timezone") || "Europe/Zurich",
   nowMovementId: null,
@@ -571,7 +577,13 @@ window.addEventListener("offline", updateNetworkStatus);
 
 updateNetworkStatus();
 registerServiceWorker();
-initTimeSimulationListeners();
+
+if (!isLocal) {
+  const timeControl = $(".topbar-time-control");
+  if (timeControl) timeControl.style.display = "none";
+} else {
+  initTimeSimulationListeners();
+}
 
 setInterval(() => {
   if (!state.useCustomTime) {
